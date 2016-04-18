@@ -15,20 +15,21 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by AKoscinski on 2016-04-18.
  */
 public class BankFeedServiceTests {
     private BankFeedService bankFeedService;
-    @BeforeClass
-    public static void initializeFile(){
-        try(FileWriter fr = new FileWriter("testData.txt");
-            PrintWriter pw = new PrintWriter(fr)){
+    private static final String filePath = "src\\test\\testresources\\testData.txt";
 
-            pw.write("name=John Kubrick;city=Cracow;gender=m;email=email@email.com;phonenumber=737737737;initialoverdraft=300.0");
-            pw.write("accounttype=c;balance=100;overdraft=50;name=John Kubrick");
+    @BeforeClass
+    public static void initializeFile() {
+        try (FileWriter fr = new FileWriter(filePath);
+             PrintWriter pw = new PrintWriter(fr)) {
+
+            pw.write("name=John Kubrick;city=Cracow;gender=m;email=email@email.com;phonenumber=737737737;initialoverdraft=300.0\n");
+            pw.write("accounttype=c;balance=100;overdraft=50;name=John Kubrick\n");
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -38,35 +39,35 @@ public class BankFeedServiceTests {
     }
 
     @AfterClass
-    public static void removeFile(){
+    public static void removeFile() {
         try {
-            Files.delete(Paths.get("testData.txt"));
+            Files.delete(Paths.get(filePath));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Before
-    public void initializeBankFeedService(){
+    public void initializeBankFeedService() {
         Bank bank = Mockito.mock(Bank.class);
-        bankFeedService  = new BankFeedService(bank);
+        bankFeedService = new BankFeedService(bank);
     }
 
     @Test
-    public void testIfFileIsLoaded(){
-        assertTrue("File is not properly loaded",bankFeedService.loadFeed("testData.txt"));
+    public void testIfFileIsLoaded() {
+        bankFeedService.loadFeed(filePath);
     }
 
     @Test
-    public void testParsingAndLoadingToClientMap(){
-        bankFeedService.loadFeed("testData.txt");
+    public void testParsingAndLoadingToClientMap() {
+        bankFeedService.loadFeed(filePath);
         assertEquals("Client info is not loaded properly", "John Kubrick", bankFeedService.getClientMap().get("name"));
     }
 
     @Test
-    public void testParsingAndLoadingToAccountMap(){
-        bankFeedService.loadFeed("testData");
-        assertEquals("Accout info is not loaded properly", "John Kubrick", bankFeedService.getAccountMap().get("name"));
+    public void testParsingAndLoadingToAccountMap() {
+        bankFeedService.loadFeed(filePath);
+        assertEquals("Account info is not loaded properly", "John Kubrick", bankFeedService.getAccountMap().get("name"));
     }
 
 }

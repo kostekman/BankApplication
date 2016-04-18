@@ -3,11 +3,19 @@ package com.luxoft.bankapp.model;
 import com.luxoft.bankapp.exceptions.BankException;
 import com.luxoft.bankapp.exceptions.NotEnoughFundsException;
 
+import java.util.Map;
+
 public class SavingAccount extends AbstractAccount implements Account {
 
 	public SavingAccount(float balance) {
 		super(balance);
 	}
+
+	public SavingAccount() {
+
+	}
+
+
 	@Override
 	public void withdraw(float amount) throws BankException{
 		if(amount > getBalance()){
@@ -17,6 +25,17 @@ public class SavingAccount extends AbstractAccount implements Account {
 		else
 			super.withdraw(amount);
 	}
+
+	@Override
+	public void parseFeed(Map<String, String> feed) {
+		setBalance(Float.parseFloat(feed.get("balance")));
+	}
+
+	@Override
+	public String getAccountType() {
+		return "s";
+	}
+
 	@Override
 	public void printReport() {
 		System.out.printf(this.toString());

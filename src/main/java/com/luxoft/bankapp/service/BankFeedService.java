@@ -12,12 +12,13 @@ import java.util.Map;
 /**
  * Created by AKoscinski on 2016-04-18.
  */
-public class BankFeedService     {
+public class BankFeedService {
+
     private Map<String, String> clientMap = new HashMap<>();
     private Map<String, String> accountMap = new HashMap<>();
     private Bank activeBank;
 
-    public BankFeedService(Bank activeBank){
+    public BankFeedService(Bank activeBank) {
         this.activeBank = activeBank;
     }
 
@@ -29,28 +30,30 @@ public class BankFeedService     {
         return clientMap;
     }
 
-    public boolean loadFeed(String pathToFile){
-        try(FileReader fr = new FileReader(pathToFile);
-            LineNumberReader lnr = new LineNumberReader(fr)){
+    public void loadFeed(String pathToFile) {
+        try (FileReader fr = new FileReader(pathToFile);
+             LineNumberReader lnr = new LineNumberReader(fr)) {
 
             String line;
-            while((line = lnr.readLine()) != null){
+            while ((line = lnr.readLine()) != null) {
                 String[] lineSplitted = line.split(";|=");
-                for(int i = 0; i < lineSplitted.length; i++){
-                    clientMap.put(lineSplitted[i], lineSplitted[++i]);
+                if (lineSplitted[0].equals("name")) {
+                    for (int i = 0; i < lineSplitted.length; i++) {
+                        clientMap.put(lineSplitted[i], lineSplitted[++i]);
+                    }
+                } else if (lineSplitted[0].equals("accounttype")) {
+                    for (int i = 0; i < lineSplitted.length; i++) {
+                        accountMap.put(lineSplitted[i], lineSplitted[++i]);
+                    }
                 }
 
             }
 
-
-
-            return true;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return false;
     }
 
 }

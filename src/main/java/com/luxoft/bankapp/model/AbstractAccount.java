@@ -6,32 +6,32 @@ public abstract class AbstractAccount implements Account {
 	private float balance;
 	private int ID;
 	private static int nextID = 1;
+	private String accountType;
 	
 	public AbstractAccount(float balance) {
 		this.balance = balance;
 		this.ID = nextID++;
 	}
 
+	public AbstractAccount() {}
+
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ID;
-		return result;
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		AbstractAccount that = (AbstractAccount) o;
+
+		if (ID != that.ID) return false;
+		return accountType.equals(that.accountType);
+
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof AbstractAccount))
-			return false;
-		AbstractAccount other = (AbstractAccount) obj;
-		if (ID != other.ID)
-			return false;
-		return true;
+	public int hashCode() {
+		int result = ID;
+		result = 31 * result;
+		return result;
 	}
 
 	@Override
@@ -43,7 +43,12 @@ public abstract class AbstractAccount implements Account {
 	public int decimalValue(){
 		return Math.round(balance);
 	}
-	
+
+	@Override
+	public void setBalance(float balance) {
+		this.balance = balance;
+	}
+
 	@Override
 	public float getBalance() {
 		return balance;
