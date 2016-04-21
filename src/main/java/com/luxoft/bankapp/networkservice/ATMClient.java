@@ -1,15 +1,19 @@
 package com.luxoft.bankapp.networkservice;
 
+import com.luxoft.bankapp.scanner.BankScanner;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import static com.luxoft.bankapp.scanner.BankScanner.getScanner;
+
 /**
  * Created by AKoscinski on 2016-04-18.
  */
-public class BankClient {
+public class ATMClient {
     Socket requestSocket;
     ObjectOutputStream out;
     ObjectInputStream in;
@@ -18,9 +22,11 @@ public class BankClient {
 
     void run() {
         try {
+            System.out.println("Select host: ");
+            String serverAddress = getScanner().nextLine();
             // 1. creating a socket to connect to the server
-            requestSocket = new Socket(SERVER, 2004);
-            System.out.println("Connected to localhost in port 2004");
+            requestSocket = new Socket(serverAddress, 2004);
+            System.out.println("Connected to " + serverAddress +" in port 2004");
             // 2. get Input and Output streams
             out = new ObjectOutputStream(requestSocket.getOutputStream());
             out.flush();
@@ -28,11 +34,27 @@ public class BankClient {
             // 3: Communicating with the server
             do {
                 try {
-                    message = (String) in.readObject();
-                    System.out.println("server>" + message);
-                    sendMessage("Hi my server");
-                    message = "bye";
-                    sendMessage(message);
+                    sendMessage("ATM");
+                    String client;
+                    do {
+                        System.out.println("Select client: (name surname)");
+                        client = BankScanner.getScanner().nextLine();
+                        sendMessage(client);
+                        message = (String) in.readObject();
+                        System.out.println(message);
+                    }while(message.equals("Client not found"));
+                    String operation;
+                    do {
+                        System.out.println("Select deposit(0) or withdrawal(1)");
+                        operation = BankScanner.getScanner().nextLine();
+                    }while(!(operation.equals("0") || operation.equals("1")));
+                    sendMessage(operation);
+                    Float amount = BankScanner.getScanner().nextFloat();
+                    sendMessage(amount);
+                    message = (String)in.readObject();
+                    System.out.println(message);
+                    message = (String)in.readObject();
+
                 } catch (ClassNotFoundException classNot) {
                     System.err.println("data received in unknown format");
                 }
@@ -53,7 +75,7 @@ public class BankClient {
         }
     }
 
-    void sendMessage(final String msg) {
+    void sendMessage(final Object msg) {
         try {
             out.writeObject(msg);
             out.flush();
@@ -64,7 +86,7 @@ public class BankClient {
     }
 
     public static void main(final String args[]) {
-        BankClient client = new BankClient();
+        ATMClient client = new ATMClient();
         client.run();
     }
 
