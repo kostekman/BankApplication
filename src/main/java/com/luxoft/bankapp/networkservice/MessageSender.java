@@ -7,7 +7,7 @@ import java.io.ObjectOutputStream;
  * Created by Adam on 21.04.2016.
  */
 public class MessageSender {
-    static void sendMessage(final String msg, ObjectOutputStream out) {
+    static void sendMessage(final Object msg, ObjectOutputStream out) {
         try {
             out.writeObject(msg);
             out.flush();

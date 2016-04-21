@@ -12,9 +12,9 @@ import static com.luxoft.bankapp.networkservice.MessageSender.sendMessage;
 import static com.luxoft.bankapp.scanner.BankScanner.getScanner;
 
 /**
- * Created by AKoscinski on 2016-04-18.
+ * Created by Adam on 21.04.2016.
  */
-public class ATMClient {
+public class BankRemoteOfficeClient {
     private Socket requestSocket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
@@ -34,26 +34,9 @@ public class ATMClient {
             // 3: Communicating with the server
             do {
                 try {
-                    sendMessage("ATM", out);
+                    sendMessage("OFFICE", out);
                     String client;
-                    do {
-                        System.out.println("Select client: (name surname)");
-                        client = BankScanner.getScanner().nextLine();
-                        sendMessage(client, out);
-                        message = (String) in.readObject();
-                        System.out.println(message);
-                    }while(message.equals("Client not found"));
-                    String operation;
-                    do {
-                        System.out.println("Select deposit(0) or withdrawal(1)");
-                        operation = BankScanner.getScanner().nextLine();
-                    }while(!(operation.equals("0") || operation.equals("1")));
-                    sendMessage(operation, out);
-                    Float amount = BankScanner.getScanner().nextFloat();
-                    sendMessage(amount, out);
-                    message = (String)in.readObject();
-                    System.out.println(message);
-                    message = (String)in.readObject();
+
 
                 } catch (ClassNotFoundException classNot) {
                     System.err.println("data received in unknown format");
@@ -76,8 +59,9 @@ public class ATMClient {
     }
 
     public static void main(final String args[]) {
-        ATMClient client = new ATMClient();
+        BankRemoteOfficeClient client = new BankRemoteOfficeClient();
         client.run();
     }
 
 }
+
