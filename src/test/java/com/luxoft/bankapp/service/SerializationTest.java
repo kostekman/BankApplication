@@ -6,8 +6,10 @@ import com.luxoft.bankapp.model.Gender;
 import com.luxoft.bankapp.model.SavingAccount;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -20,6 +22,14 @@ import static org.junit.Assert.assertEquals;
 public class SerializationTest {
     private static final String filePath = "src\\test\\testresources\\testData.data";
     private BankService bankService;
+
+    @BeforeClass
+    public static void createFileIfNeeded(){
+        File file = new File("src\\test\\testresources");
+        if (!file.exists()) {
+            file.mkdir();
+        }
+    }
 
     @Before
     public void initialization(){
