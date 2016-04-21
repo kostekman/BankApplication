@@ -7,10 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -25,6 +22,11 @@ public class BankFeedServiceTests {
 
     @BeforeClass
     public static void initializeFile() {
+        File file = new File("src\\test\\testresources");
+        if (!file.exists()) {
+            file.mkdir();
+        }
+
         try (FileWriter fr = new FileWriter(filePath);
              PrintWriter pw = new PrintWriter(fr)) {
 
