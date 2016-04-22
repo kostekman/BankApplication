@@ -37,7 +37,7 @@ public class ATMServerService {
         if(operation.equals("1")){
             client.getActiveAccount().withdraw(amount);
         }
-        else{
+        else if(operation.equals("0")){
             client.getActiveAccount().deposit(amount);
         }
         sendMessage("Transaction successful", out);

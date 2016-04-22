@@ -43,7 +43,7 @@ public class BankServer {
                         ATMService(in, out, bank);
                     }
                     else if(message.equals("OFFICE")){
-
+                        
                     }
                     message = (String) in.readObject();
                 } catch (ClassNotFoundException classnot) {

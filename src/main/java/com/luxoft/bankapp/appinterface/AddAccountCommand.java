@@ -6,6 +6,8 @@ import com.luxoft.bankapp.model.SavingAccount;
 import com.luxoft.bankapp.scanner.BankScanner;
 import com.luxoft.bankapp.service.BankService;
 
+import static com.luxoft.bankapp.scanner.StringChecker.checkNumber;
+
 public class AddAccountCommand extends AbstractCommand implements Command {
 
 	public AddAccountCommand(BankService bankService) {
@@ -32,8 +34,7 @@ public class AddAccountCommand extends AbstractCommand implements Command {
 			while(!isCorrectData()){
 				System.out.println("Please provide overdraft for the account:");
 				checkingOverdraft = BankScanner.getScanner().nextLine();
-				setNumberMatcher(getNumberPattern().matcher(checkingOverdraft));
-				setCorrectData(getNumberMatcher().matches());
+				setCorrectData(checkNumber(checkingOverdraft));
 				if(!isCorrectData()){
 					System.out.println("The number you entered is incorrect");
 				}

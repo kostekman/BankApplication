@@ -4,6 +4,8 @@ import com.luxoft.bankapp.model.Bank;
 import com.luxoft.bankapp.scanner.BankScanner;
 import com.luxoft.bankapp.service.BankService;
 
+import static com.luxoft.bankapp.scanner.StringChecker.checkName;
+
 public class DepositCommand extends AbstractAccountBalanceModifierCommand implements Command {
 	
 	public DepositCommand(BankService bankService) {
@@ -20,8 +22,7 @@ public class DepositCommand extends AbstractAccountBalanceModifierCommand implem
 		while(!isCorrectData()){
 			System.out.println("Please provide how much money you want to deposit.");
 			amount = BankScanner.getScanner().nextLine();
-			setNumberMatcher(getNumberPattern().matcher(amount));
-			setCorrectData(getNumberMatcher().matches());
+			setCorrectData(checkName(amount));
 			if(!isCorrectData()){
 				System.out.println("The number you entered is incorrect");
 			}

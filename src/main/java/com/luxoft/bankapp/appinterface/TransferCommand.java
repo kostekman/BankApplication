@@ -5,6 +5,9 @@ import com.luxoft.bankapp.model.Client;
 import com.luxoft.bankapp.scanner.BankScanner;
 import com.luxoft.bankapp.service.BankService;
 
+import static com.luxoft.bankapp.scanner.StringChecker.checkName;
+import static com.luxoft.bankapp.scanner.StringChecker.checkNumber;
+
 public class TransferCommand extends AbstractAccountBalanceModifierCommand implements Command {
 
 	Client clientToTransfer;
@@ -23,8 +26,7 @@ public class TransferCommand extends AbstractAccountBalanceModifierCommand imple
 		while (!isCorrectData()) {
 			System.out.println("Please type the name of the client as follows: \"name surname\".");
 			name = BankScanner.getScanner().nextLine();
-			setNameMatcher(getNamePattern().matcher(name));
-			setCorrectData(getNameMatcher().matches());
+			setCorrectData(checkName(name));
 			if (!isCorrectData()) {
 				System.out.println("The name you entered is incorrect");
 			}
@@ -42,8 +44,7 @@ public class TransferCommand extends AbstractAccountBalanceModifierCommand imple
 			while (!isCorrectData()) {
 				System.out.println("Please provide how much money you want to transfer.");
 				amount = BankScanner.getScanner().nextLine();
-				setNumberMatcher(getNumberPattern().matcher(amount));
-				setCorrectData(getNumberMatcher().matches());
+				setCorrectData(checkNumber(amount));
 				if (!isCorrectData()) {
 					System.out.println("The number you entered is incorrect");
 				}

@@ -6,6 +6,8 @@ import com.luxoft.bankapp.model.Gender;
 import com.luxoft.bankapp.scanner.BankScanner;
 import com.luxoft.bankapp.service.BankService;
 
+import static com.luxoft.bankapp.scanner.StringChecker.*;
+
 public class AddClientCommand extends AbstractCommand implements Command {
 
 	public AddClientCommand(BankService bankService) {
@@ -18,8 +20,7 @@ public class AddClientCommand extends AbstractCommand implements Command {
 		while(!isCorrectData()) {
 			System.out.println("Please type the name of the new client as follows: \"name surname\".");
 			name = BankScanner.getScanner().nextLine();
-			setNameMatcher(getNamePattern().matcher(name));
-			setCorrectData(getNamePattern().matcher(name).matches());
+			setCorrectData(checkName(name));
 			if (!isCorrectData()) {
 				System.out.println("The name you entered is incorrect");
 			}
@@ -34,9 +35,8 @@ public class AddClientCommand extends AbstractCommand implements Command {
 		String city = "";
 		while(!isCorrectData()){
 			System.out.println("Please type the city of the new client.");
-			name = BankScanner.getScanner().nextLine();
-			setCityMatcher(getCityPattern().matcher(name));
-			setCorrectData(getCityPattern().matcher(name).matches());
+			city = BankScanner.getScanner().nextLine();
+			setCorrectData(checkCity(city));
 			if(!isCorrectData()){
 				System.out.println("The data you entered is incorrect");
 			}
@@ -49,8 +49,7 @@ public class AddClientCommand extends AbstractCommand implements Command {
 		while(!isCorrectData()){
 			System.out.println("Please type an e-mail of the client");
 			email = BankScanner.getScanner().nextLine();
-			setEmailMatcher(getEmailPattern().matcher(email));
-			setCorrectData(getEmailMatcher().matches());
+			setCorrectData(checkEmail(email));
 			if(!isCorrectData()){
 				System.out.println("The email you entered is incorrect");
 			}
@@ -63,8 +62,7 @@ public class AddClientCommand extends AbstractCommand implements Command {
 		while(!isCorrectData()){
 			System.out.println("Please type a phonenumber of the client");
 			phoneNumber = BankScanner.getScanner().nextLine();
-			setPhoneNumberMatcher(getPhoneNumberPattern().matcher(phoneNumber));
-			setCorrectData(getPhoneNumberMatcher().matches());
+			setCorrectData(checkPhoneNumber(phoneNumber));
 			if(!isCorrectData()){
 				System.out.println("The phonenumber you entered is incorrect");
 			}
@@ -77,8 +75,7 @@ public class AddClientCommand extends AbstractCommand implements Command {
 		while(!isCorrectData()){
 			System.out.println("Please provide how much is overdraft.");
 			overdraft = BankScanner.getScanner().nextLine();
-			setNumberMatcher(getNumberPattern().matcher(overdraft));
-			setCorrectData(getNumberMatcher().matches());
+			setCorrectData(checkNumber(overdraft));
 			if(!isCorrectData()){
 				System.out.println("The number you entered is incorrect");
 			}

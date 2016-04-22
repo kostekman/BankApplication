@@ -5,6 +5,8 @@ import com.luxoft.bankapp.model.Client;
 import com.luxoft.bankapp.scanner.BankScanner;
 import com.luxoft.bankapp.service.BankService;
 
+import static com.luxoft.bankapp.scanner.StringChecker.checkName;
+
 public class FindClientCommand extends AbstractCommand  implements Command {
 	
 	public FindClientCommand(BankService bankService) {
@@ -17,8 +19,7 @@ public class FindClientCommand extends AbstractCommand  implements Command {
 		while(!isCorrectData()){
 			System.out.println("Please type the name of the client as follows: \"name surname\".");
 			name = BankScanner.getScanner().nextLine();
-			setNameMatcher(getNamePattern().matcher(name));
-			setCorrectData(getNamePattern().matcher(name).matches());
+			setCorrectData(checkName(name));
 			if(!isCorrectData()){
 				System.out.println("The name you entered is incorrect");
 			}
