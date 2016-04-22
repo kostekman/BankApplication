@@ -38,6 +38,11 @@ public abstract class AbstractAccount implements Account {
 	public void printReport() {
 
 	}
+
+	@Override
+	public String getReport() {
+		return this.toString();
+	}
 	
 	@Override
 	public int decimalValue(){

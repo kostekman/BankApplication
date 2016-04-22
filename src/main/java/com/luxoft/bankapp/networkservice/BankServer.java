@@ -10,6 +10,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import static com.luxoft.bankapp.networkservice.ATMServerService.*;
+import static com.luxoft.bankapp.networkservice.RemoteOfficeServerService.RemoteOfficeService;
 
 /**
  * Created by AKoscinski on 2016-04-18.
@@ -43,7 +44,7 @@ public class BankServer {
                         ATMService(in, out, bank);
                     }
                     else if(message.equals("OFFICE")){
-                        
+                        RemoteOfficeService(in, out, bank);
                     }
                     message = (String) in.readObject();
                 } catch (ClassNotFoundException classnot) {

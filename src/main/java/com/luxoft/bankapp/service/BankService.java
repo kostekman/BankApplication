@@ -5,6 +5,8 @@ import com.luxoft.bankapp.model.Bank;
 import com.luxoft.bankapp.model.Client;
 
 public interface BankService {
+    public BankInfo getBankInfo(Bank bank);
+
     public void addClient(Bank bank, Client client);
 
     public void removeClient(Bank bank, Client client);

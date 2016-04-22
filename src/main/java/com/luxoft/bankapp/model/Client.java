@@ -171,6 +171,11 @@ public class Client implements Report,Serializable {
     }
 
     @Override
+    public String getReport() {
+        return this.toString();
+    }
+
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
 

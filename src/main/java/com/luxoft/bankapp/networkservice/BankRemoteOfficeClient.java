@@ -1,5 +1,7 @@
 package com.luxoft.bankapp.networkservice;
 
+import com.luxoft.bankapp.appinterface.Command;
+import com.luxoft.bankapp.networkcommands.*;
 import com.luxoft.bankapp.scanner.BankScanner;
 
 import java.io.IOException;
@@ -7,6 +9,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.luxoft.bankapp.networkservice.MessageSender.sendMessage;
 import static com.luxoft.bankapp.scanner.BankScanner.getScanner;
@@ -19,6 +24,10 @@ public class BankRemoteOfficeClient {
     private ObjectOutputStream out;
     private ObjectInputStream in;
     private String message;
+    private boolean exit = false;
+
+    private Map<String, NetworkCommand> commandMap = new HashMap<>();
+
 
     void run() {
         try {
@@ -31,17 +40,25 @@ public class BankRemoteOfficeClient {
             out = new ObjectOutputStream(requestSocket.getOutputStream());
             out.flush();
             in = new ObjectInputStream(requestSocket.getInputStream());
+            initializeCommandMap(in, out);
             // 3: Communicating with the server
+            sendMessage("OFFICE", out);
             do {
-                try {
-                    sendMessage("OFFICE", out);
-                    String client;
-
-
-                } catch (ClassNotFoundException classNot) {
-                    System.err.println("data received in unknown format");
+                System.out.println("\n");
+                Object[] keys = commandMap.keySet().toArray();
+                Arrays.sort(keys);
+                for(Object name : keys){
+                    commandMap.get(name).printCommandInfo();
                 }
-            } while (!message.equals("bye"));
+                String commandString = BankScanner.getScanner().nextLine();
+                if(commandMap.keySet().contains(commandString)){
+                    commandMap.get(commandString).execute();
+                }
+                else{
+                    System.out.println("No such command in the system");
+                }
+            } while (!exit);
+            sendMessage("bye", out);
         } catch (UnknownHostException unknownHost) {
             System.err.println("You are trying to connect to an unknown host!");
         } catch (IOException ioException) {
@@ -56,6 +73,22 @@ public class BankRemoteOfficeClient {
                 ioException.printStackTrace();
             }
         }
+    }
+
+    private void initializeCommandMap(ObjectInputStream in, ObjectOutputStream out) {
+        commandMap.put("0", new GetBankStatisticsNetworkCommand(in, out));
+        commandMap.put("1", new GetClientInfoNetworkCommand(in, out));
+        commandMap.put("2", new AddClientNetworkCommand(in, out));
+        commandMap.put("3", new RemoveClientNetworkCommand(in, out));
+        commandMap.put("4", new NetworkCommand() { // 7 - Exit Command
+            public void execute() {
+                BankScanner.closeScanner();
+                exit = true;
+            }
+            public void printCommandInfo() {
+                System.out.println("Exit");
+            }
+        });
     }
 
     public static void main(final String args[]) {

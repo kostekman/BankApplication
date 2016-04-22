@@ -29,19 +29,6 @@ public class Bank implements Report {
         listeners.add(new PrintClientListener());
         listeners.add(new EmailNotificationListener());
         listeners.add(new AddClientToMapListener());
-        /*listeners.add(new ClientRegistrationListener(){ //using the anonymous classes
-            @Override
-			public void onClientAdded(Client client) {
-				client.printReport();
-
-			}
-		});
-		listeners.add(new ClientRegistrationListener(){
-			@Override
-			public void onClientAdded(Client client) {
-				System.out.println("Notification email for client " + client.getName() + " to be sent");	
-			}
-		});*/
     }
 
     public void addClient(Client client) {
@@ -54,6 +41,7 @@ public class Bank implements Report {
 
     public void removeClient(Client client) {
         clients.remove(client);
+        clientNameMap.remove(client.getName());
     }
 
     public Set<Client> getClients() {
@@ -82,6 +70,7 @@ public class Bank implements Report {
     }
 
 
+
     @Override
     public void printReport() {
         System.out.println("Bank clients: ");
@@ -89,6 +78,16 @@ public class Bank implements Report {
             c.printReport();
         }
 
+    }
+
+    @Override
+    public String getReport() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Bank clients: ");
+        for (Client c : clients) {
+            sb.append(c.getReport());
+        }
+        return sb.toString();
     }
 
     private class PrintClientListener implements ClientRegistrationListener {

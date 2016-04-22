@@ -9,6 +9,13 @@ import java.io.*;
 public class BankServiceImpl implements BankService {
 
     @Override
+    public BankInfo getBankInfo(Bank bank) {
+        BankInfo bankInfo = new BankInfo();
+        bankInfo.setBankReport(bank.getReport());
+        return bankInfo;
+    }
+
+    @Override
     public void addClient(Bank bank, Client client) {
         bank.addClient(client);
     }

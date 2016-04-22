@@ -86,6 +86,10 @@ public class BankApplication {
 			bankReporter.getClientsSorted(bank);
 			bankReporter.getClientsByCity(bank);
 		}
+		else{
+			System.out.println("You have provided no arguments, program will now exit;");
+			System.exit(0);
+		}
 
 		bank.printReport();
 		System.out.println("\n------------------------------------------");
