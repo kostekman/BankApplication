@@ -36,6 +36,7 @@ public class Client implements Report,Serializable {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.ID = nextID++;
+        this.addAccount(new SavingAccount());
     }
 
     @Override

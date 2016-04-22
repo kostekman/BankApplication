@@ -49,8 +49,6 @@ public class BankServer {
                     message = (String) in.readObject();
                 } catch (ClassNotFoundException classnot) {
                     System.err.println("Data received in unknown format");
-                } catch (BankException e) {
-                    sendMessage(e.getMessage());
                 }
             } while (!message.equals("bye"));
         } catch (IOException ioException) {
