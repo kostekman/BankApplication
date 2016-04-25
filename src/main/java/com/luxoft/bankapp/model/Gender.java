@@ -14,7 +14,7 @@ public enum Gender {
 	
 	private String salutation; 
 
-	private Gender(String salutation) {
+	Gender(String salutation) {
 		this.salutation = salutation;
 	}
 	

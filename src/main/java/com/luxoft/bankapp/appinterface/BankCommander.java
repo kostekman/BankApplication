@@ -8,7 +8,7 @@ import com.luxoft.bankapp.service.BankServiceImpl;
 import java.util.HashMap;
 import java.util.Map;
 
-class BankCommander {
+public class BankCommander {
     private static BankService bankService = new BankServiceImpl();
     private static Map<String, Command> commandMap;
     static {

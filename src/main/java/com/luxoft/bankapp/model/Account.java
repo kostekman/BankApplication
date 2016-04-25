@@ -9,15 +9,15 @@ import java.util.Map;
 public interface Account extends Report, Serializable {
     void setBalance(float balance);
 
-    public float getBalance();
+    float getBalance();
 
-    public void deposit(float x);
+    void deposit(float x);
 
-    public void withdraw(float x) throws BankException;
+    void withdraw(float x) throws BankException;
 
-    public int decimalValue();
+    int decimalValue();
 
-    public void parseFeed(Map<String, String> feed);
+    void parseFeed(Map<String, String> feed);
 
-    public String getAccountType();
+    String getAccountType();
 }

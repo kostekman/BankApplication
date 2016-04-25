@@ -1,6 +1,5 @@
 package com.luxoft.bankapp.networkservice;
 
-import com.luxoft.bankapp.appinterface.Command;
 import com.luxoft.bankapp.networkcommands.*;
 import com.luxoft.bankapp.scanner.BankScanner;
 
@@ -23,7 +22,6 @@ public class BankRemoteOfficeClient {
     private Socket requestSocket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
-    private String message;
     private boolean exit = false;
 
     private Map<String, NetworkCommand> commandMap = new HashMap<>();

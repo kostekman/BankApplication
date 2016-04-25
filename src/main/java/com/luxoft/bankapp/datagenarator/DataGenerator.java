@@ -11,7 +11,7 @@ public class DataGenerator {
 	private static String[] surnames = {"Hamilton", "Perry", "White", "Damon", "Cruise"};
 	
 	public static void generateData(String fileName, String csvSeparator, int customersAmount, int accountsPerCustomer) {
-		try(PrintWriter printWriter = new PrintWriter(fileName);) {
+		try(PrintWriter printWriter = new PrintWriter(fileName)) {
 			
 		
 			r = new Random();

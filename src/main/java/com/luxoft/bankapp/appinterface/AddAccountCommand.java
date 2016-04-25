@@ -26,7 +26,7 @@ public class AddAccountCommand extends AbstractCommand implements Command {
 			else{
 				setCorrectData(true);
 			}
-		};
+		}
 		setCorrectData(false);
 		
 		if(account.equals("0")){
@@ -39,7 +39,7 @@ public class AddAccountCommand extends AbstractCommand implements Command {
 					System.out.println("The number you entered is incorrect");
 				}
 				
-			};
+			}
 			setCorrectData(false);
 			getBankService().addAccount(getActiveClient(), new CheckingAccount(0.0f, Float.valueOf(checkingOverdraft)));
 		}

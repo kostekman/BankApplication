@@ -27,7 +27,7 @@ public class DepositCommand extends AbstractAccountBalanceModifierCommand implem
 				System.out.println("The number you entered is incorrect");
 			}
 			
-		};
+		}
 		setCorrectData(false);
 		depositOnAccount(amount);
 		

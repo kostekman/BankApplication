@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 public class StringChecker {
     private static final Pattern namePattern = Pattern.compile("^[A-Z][a-zA-Z]* [a-zA-z]+([ '-][a-zA-Z]+)*$");
 
-    private static final Pattern numberPattern = Pattern.compile("[0-9]+?(.[0-9]+)");;
+    private static final Pattern numberPattern = Pattern.compile("[0-9]+?(.[0-9]+)");
 
     private static final Pattern emailPattern = Pattern.compile("^[a-zA-Z0-9_!#$%&�*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$");
 

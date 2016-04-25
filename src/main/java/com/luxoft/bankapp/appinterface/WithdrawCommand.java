@@ -27,7 +27,7 @@ public class WithdrawCommand extends AbstractAccountBalanceModifierCommand  impl
 				System.out.println("The number you entered is incorrect");
 			}
 			
-		};
+		}
 		setCorrectData(false);
 		withdrawFromAccount(amount);
 	}
