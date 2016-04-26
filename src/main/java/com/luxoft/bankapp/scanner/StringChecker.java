@@ -17,27 +17,27 @@ public class StringChecker {
 
     private static final Pattern cityPattern = Pattern.compile("[A-Z][a-z]*( [A-Z][a-z]*)*");
 
-    public static boolean checkName(String name){
+    public static boolean checkName(String name) {
         Matcher matcher = namePattern.matcher(name);
         return matcher.matches();
     }
 
-    public static boolean checkNumber(String number){
+    public static boolean checkNumber(String number) {
         Matcher matcher = numberPattern.matcher(number);
         return matcher.matches();
     }
 
-    public static boolean checkEmail(String email){
+    public static boolean checkEmail(String email) {
         Matcher matcher = emailPattern.matcher(email);
         return matcher.matches();
     }
 
-    public static boolean checkCity(String city){
+    public static boolean checkCity(String city) {
         Matcher matcher = cityPattern.matcher(city);
         return matcher.matches();
     }
 
-    public static boolean checkPhoneNumber(String phoneNumber){
+    public static boolean checkPhoneNumber(String phoneNumber) {
         Matcher matcher = phoneNumberPattern.matcher(phoneNumber);
         return matcher.matches();
     }

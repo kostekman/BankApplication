@@ -5,10 +5,11 @@ import java.io.Serializable;
 /**
  * Created by Adam on 22.04.2016.
  */
-public class BankInfo implements Serializable{
+public class BankInfo implements Serializable {
     private String bankReport;
 
-    public BankInfo(){}
+    public BankInfo() {
+    }
 
     public String getBankReport() {
         return bankReport;

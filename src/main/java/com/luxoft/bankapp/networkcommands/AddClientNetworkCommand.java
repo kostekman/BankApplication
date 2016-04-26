@@ -1,6 +1,5 @@
 package com.luxoft.bankapp.networkcommands;
 
-import com.luxoft.bankapp.model.Bank;
 import com.luxoft.bankapp.model.Client;
 import com.luxoft.bankapp.model.Gender;
 import com.luxoft.bankapp.scanner.BankScanner;
@@ -15,8 +14,9 @@ import static com.luxoft.bankapp.scanner.StringChecker.*;
 /**
  * Created by Adam on 22.04.2016.
  */
-public class AddClientNetworkCommand extends AbstractNetworkCommand{
+public class AddClientNetworkCommand extends AbstractNetworkCommand {
     boolean isCorrectData = false;
+
     public AddClientNetworkCommand(ObjectInputStream in, ObjectOutputStream out) {
         super(in, out);
     }
@@ -26,7 +26,7 @@ public class AddClientNetworkCommand extends AbstractNetworkCommand{
         sendMessage("ADDCLIENT", out);
 
         String name = "";
-        while(!isCorrectData) {
+        while (!isCorrectData) {
             System.out.println("Please type the name of the new client as follows: \"name surname\".");
             name = BankScanner.getScanner().nextLine();
             isCorrectData = (checkName(name));
@@ -38,11 +38,11 @@ public class AddClientNetworkCommand extends AbstractNetworkCommand{
         isCorrectData = (false);
 
         String city = "";
-        while(!isCorrectData){
+        while (!isCorrectData) {
             System.out.println("Please type the city of the new client.");
             city = BankScanner.getScanner().nextLine();
             isCorrectData = (checkCity(city));
-            if(!isCorrectData){
+            if (!isCorrectData) {
                 System.out.println("The data you entered is incorrect");
             }
 
@@ -51,11 +51,11 @@ public class AddClientNetworkCommand extends AbstractNetworkCommand{
 
 
         String email = "";
-        while(!isCorrectData){
+        while (!isCorrectData) {
             System.out.println("Please type an e-mail of the client");
             email = BankScanner.getScanner().nextLine();
             isCorrectData = (checkEmail(email));
-            if(!isCorrectData){
+            if (!isCorrectData) {
                 System.out.println("The email you entered is incorrect");
             }
 
@@ -64,11 +64,11 @@ public class AddClientNetworkCommand extends AbstractNetworkCommand{
         isCorrectData = (false);
 
         String phoneNumber = "";
-        while(!isCorrectData){
+        while (!isCorrectData) {
             System.out.println("Please type a phonenumber of the client");
             phoneNumber = BankScanner.getScanner().nextLine();
             isCorrectData = (checkPhoneNumber(phoneNumber));
-            if(!isCorrectData){
+            if (!isCorrectData) {
                 System.out.println("The phonenumber you entered is incorrect");
             }
 
@@ -77,11 +77,11 @@ public class AddClientNetworkCommand extends AbstractNetworkCommand{
         isCorrectData = (false);
 
         String overdraft = "";
-        while(!isCorrectData){
+        while (!isCorrectData) {
             System.out.println("Please provide how much is overdraft.");
             overdraft = BankScanner.getScanner().nextLine();
             isCorrectData = (checkNumber(overdraft));
-            if(!isCorrectData){
+            if (!isCorrectData) {
                 System.out.println("The number you entered is incorrect");
             }
 
@@ -89,23 +89,21 @@ public class AddClientNetworkCommand extends AbstractNetworkCommand{
         isCorrectData = (false);
 
         String gender = "";
-        while(!isCorrectData){
+        while (!isCorrectData) {
             System.out.println("Please provide gener male(0) or female(1)");
             gender = BankScanner.getScanner().nextLine();
-            if(!(gender.equals("1") || gender.equals("0"))){
+            if (!(gender.equals("1") || gender.equals("0"))) {
                 System.out.println("You have entered invalid data");
-            }
-            else{
+            } else {
                 isCorrectData = (true);
             }
         }
         isCorrectData = (false);
 
         Gender enumGender;
-        if(gender.equals("0")){
+        if (gender.equals("0")) {
             enumGender = Gender.MALE;
-        }
-        else{
+        } else {
             enumGender = Gender.FEMALE;
         }
         Client newClient = new Client(name, city, enumGender, email, phoneNumber, Float.valueOf(overdraft));
@@ -113,7 +111,7 @@ public class AddClientNetworkCommand extends AbstractNetworkCommand{
         sendMessage(newClient, out);
 
         try {
-            String message = (String)in.readObject();
+            String message = (String) in.readObject();
             System.out.println(message);
         } catch (IOException e) {
             e.printStackTrace();

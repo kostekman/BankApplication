@@ -26,7 +26,7 @@ public class ATMClient {
             String serverAddress = getScanner().nextLine();
             // 1. creating a socket to connect to the server
             requestSocket = new Socket(serverAddress, 2004);
-            System.out.println("Connected to " + serverAddress +" in port 2004");
+            System.out.println("Connected to " + serverAddress + " in port 2004");
             // 2. get Input and Output streams
             out = new ObjectOutputStream(requestSocket.getOutputStream());
             out.flush();
@@ -42,18 +42,18 @@ public class ATMClient {
                         sendMessage(client, out);
                         message = (String) in.readObject();
                         System.out.println(message);
-                    }while(message.equals("Client not found"));
+                    } while (message.equals("Client not found"));
                     String operation;
                     do {
                         System.out.println("Select deposit(0) or withdrawal(1)");
                         operation = BankScanner.getScanner().nextLine();
-                    }while(!(operation.equals("0") || operation.equals("1")));
+                    } while (!(operation.equals("0") || operation.equals("1")));
                     sendMessage(operation, out);
                     Float amount = BankScanner.getScanner().nextFloat();
                     sendMessage(amount, out);
-                    message = (String)in.readObject();
+                    message = (String) in.readObject();
                     System.out.println(message);
-                    message = (String)in.readObject();
+                    message = (String) in.readObject();
 
                 } catch (ClassNotFoundException classNot) {
                     System.err.println("data received in unknown format");

@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Client implements Report,Serializable {
+public class Client implements Report, Serializable {
 
     private static int nextID = 1;
 

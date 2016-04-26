@@ -17,38 +17,33 @@ import static com.luxoft.bankapp.networkservice.MessageSender.sendMessage;
  */
 public class RemoteOfficeServerService {
 
-    public static void RemoteOfficeService(ObjectInputStream in, ObjectOutputStream out, Bank bank){
+    public static void RemoteOfficeService(ObjectInputStream in, ObjectOutputStream out, Bank bank) {
         String command = "";
         BankService bankService = new BankServiceImpl();
-        do{
+        do {
             try {
                 command = (String) in.readObject();
-                if(command.equals("BANKINFO")){
+                if (command.equals("BANKINFO")) {
                     sendMessage(bankService.getBankInfo(bank), out);
-                }
-                else if(command.equals("CLIENTINFO")){
+                } else if (command.equals("CLIENTINFO")) {
                     String name = (String) in.readObject();
                     Client client = bankService.findClient(bank, name);
-                    if(client != null) {
+                    if (client != null) {
                         sendMessage(client.getReport(), out);
-                    }
-                    else{
+                    } else {
                         sendMessage("Client not found", out);
                     }
-                }
-                else if(command.equals("ADDCLIENT")){
-                    Client client = (Client)in.readObject();
+                } else if (command.equals("ADDCLIENT")) {
+                    Client client = (Client) in.readObject();
                     bankService.addClient(bank, client);
                     sendMessage("Client added", out);
-                }
-                else if(command.equals("REMOVECLIENT")){
+                } else if (command.equals("REMOVECLIENT")) {
                     String name = (String) in.readObject();
                     Client client = bankService.findClient(bank, name);
-                    if(client != null) {
+                    if (client != null) {
                         bankService.removeClient(bank, client);
                         sendMessage("Client removed", out);
-                    }
-                    else{
+                    } else {
                         sendMessage("Client not found", out);
                     }
                 }
@@ -57,7 +52,7 @@ public class RemoteOfficeServerService {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-        }while(!command.equals("bye"));
+        } while (!command.equals("bye"));
 
     }
 }

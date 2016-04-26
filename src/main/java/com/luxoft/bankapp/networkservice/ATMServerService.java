@@ -18,7 +18,7 @@ import static com.luxoft.bankapp.networkservice.MessageSender.sendMessage;
 public class ATMServerService {
 
 
-    public static void ATMService(ObjectInputStream in, ObjectOutputStream out, Bank bank) throws IOException, ClassNotFoundException{
+    public static void ATMService(ObjectInputStream in, ObjectOutputStream out, Bank bank) throws IOException, ClassNotFoundException {
         String message;
         BankService bankService = new BankServiceImpl();
 
@@ -31,7 +31,7 @@ public class ATMServerService {
             } else {
                 sendMessage("Client not found", out);
             }
-        }while (client == null);
+        } while (client == null);
         String operation = (String) in.readObject();
         float amount = (Float) in.readObject();
         try {
@@ -41,10 +41,9 @@ public class ATMServerService {
                 client.getActiveAccount().deposit(amount);
             }
             sendMessage("Transaction successful", out);
-        }catch (BankException e){
+        } catch (BankException e) {
             sendMessage(e.toString(), out);
-        }
-        finally{
+        } finally {
             sendMessage("bye", out);
         }
 

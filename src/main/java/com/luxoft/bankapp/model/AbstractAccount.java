@@ -3,76 +3,77 @@ package com.luxoft.bankapp.model;
 import com.luxoft.bankapp.exceptions.BankException;
 
 public abstract class AbstractAccount implements Account {
-	private float balance;
-	private int ID;
-	private static int nextID = 1;
-	private String accountType;
-	
-	public AbstractAccount(float balance) {
-		this.balance = balance;
-		this.ID = nextID++;
-	}
+    private float balance;
+    private int ID;
+    private static int nextID = 1;
+    private String accountType;
 
-	public AbstractAccount() {}
+    public AbstractAccount(float balance) {
+        this.balance = balance;
+        this.ID = nextID++;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+    public AbstractAccount() {
+    }
 
-		AbstractAccount that = (AbstractAccount) o;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-		if (ID != that.ID) return false;
-		return accountType.equals(that.accountType);
+        AbstractAccount that = (AbstractAccount) o;
 
-	}
+        if (ID != that.ID) return false;
+        return accountType.equals(that.accountType);
 
-	@Override
-	public int hashCode() {
-		int result = ID;
-		result = 31 * result;
-		return result;
-	}
+    }
 
-	@Override
-	public void printReport() {
+    @Override
+    public int hashCode() {
+        int result = ID;
+        result = 31 * result;
+        return result;
+    }
 
-	}
+    @Override
+    public void printReport() {
 
-	@Override
-	public String getReport() {
-		return this.toString();
-	}
-	
-	@Override
-	public int decimalValue(){
-		return Math.round(balance);
-	}
+    }
 
-	@Override
-	public void setBalance(float balance) {
-		this.balance = balance;
-	}
+    @Override
+    public String getReport() {
+        return this.toString();
+    }
 
-	@Override
-	public float getBalance() {
-		return balance;
-	}
+    @Override
+    public int decimalValue() {
+        return Math.round(balance);
+    }
 
-	public int getID() {
-		return ID;
-	}
+    @Override
+    public void setBalance(float balance) {
+        this.balance = balance;
+    }
 
-	@Override
-	public void deposit(float x) {
-		balance += x;
+    @Override
+    public float getBalance() {
+        return balance;
+    }
 
-	}
+    public int getID() {
+        return ID;
+    }
 
-	@Override
-	public void withdraw(float x) throws BankException{
-		balance -= x;
+    @Override
+    public void deposit(float x) {
+        balance += x;
 
-	}
+    }
+
+    @Override
+    public void withdraw(float x) throws BankException {
+        balance -= x;
+
+    }
 
 }

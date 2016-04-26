@@ -1,7 +1,5 @@
 package com.luxoft.bankapp.networkcommands;
 
-import com.luxoft.bankapp.appinterface.Command;
-import com.luxoft.bankapp.model.Bank;
 import com.luxoft.bankapp.service.BankInfo;
 
 import java.io.IOException;
@@ -14,7 +12,7 @@ import static com.luxoft.bankapp.networkservice.MessageSender.sendMessage;
 /**
  * Created by Adam on 22.04.2016.
  */
-public class GetBankStatisticsNetworkCommand extends AbstractNetworkCommand{
+public class GetBankStatisticsNetworkCommand extends AbstractNetworkCommand {
     public GetBankStatisticsNetworkCommand(ObjectInputStream in, ObjectOutputStream out) {
         super(in, out);
     }

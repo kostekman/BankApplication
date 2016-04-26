@@ -33,7 +33,7 @@ public class BankRemoteOfficeClient {
             String serverAddress = getScanner().nextLine();
             // 1. creating a socket to connect to the server
             requestSocket = new Socket(serverAddress, 2004);
-            System.out.println("Connected to " + serverAddress +" in port 2004");
+            System.out.println("Connected to " + serverAddress + " in port 2004");
             // 2. get Input and Output streams
             out = new ObjectOutputStream(requestSocket.getOutputStream());
             out.flush();
@@ -45,14 +45,13 @@ public class BankRemoteOfficeClient {
                 System.out.println("\n");
                 Object[] keys = commandMap.keySet().toArray();
                 Arrays.sort(keys);
-                for(Object name : keys){
+                for (Object name : keys) {
                     commandMap.get(name).printCommandInfo();
                 }
                 String commandString = BankScanner.getScanner().nextLine();
-                if(commandMap.keySet().contains(commandString)){
+                if (commandMap.keySet().contains(commandString)) {
                     commandMap.get(commandString).execute();
-                }
-                else{
+                } else {
                     System.out.println("No such command in the system");
                 }
             } while (!exit);
@@ -83,6 +82,7 @@ public class BankRemoteOfficeClient {
                 BankScanner.closeScanner();
                 exit = true;
             }
+
             public void printCommandInfo() {
                 System.out.println("Exit");
             }

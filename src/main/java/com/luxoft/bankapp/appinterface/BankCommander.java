@@ -11,6 +11,7 @@ import java.util.Map;
 public class BankCommander {
     private static BankService bankService = new BankServiceImpl();
     private static Map<String, Command> commandMap;
+
     static {
         commandMap = new HashMap<>();
         commandMap.put("0", new FindClientCommand(bankService));
@@ -25,35 +26,35 @@ public class BankCommander {
                 BankScanner.closeScanner();
                 System.exit(0);
             }
+
             public void printCommandInfo() {
                 System.out.println("Exit");
             }
         });
     }
 
-    public void registerCommand(String name, Command command){
+    public void registerCommand(String name, Command command) {
         commandMap.put(name, command);
     }
 
-    public void removeCommand(String name){
+    public void removeCommand(String name) {
         commandMap.remove(name);
     }
 
     public static void main(String args[]) {
-    	Bank bank = new Bank();
-            while (true) {
-            	System.out.println("\n");
-                for(String name : commandMap.keySet()){
-                    commandMap.get(name).printCommandInfo();
-                }
-               String commandString = BankScanner.getScanner().nextLine();
-               if(commandMap.keySet().contains(commandString)){
-                   commandMap.get(commandString).execute(bank);
-               }
-                else{
-                   System.out.println("No such command in the system");
-               }
-            
-    	}
+        Bank bank = new Bank();
+        while (true) {
+            System.out.println("\n");
+            for (String name : commandMap.keySet()) {
+                commandMap.get(name).printCommandInfo();
+            }
+            String commandString = BankScanner.getScanner().nextLine();
+            if (commandMap.keySet().contains(commandString)) {
+                commandMap.get(commandString).execute(bank);
+            } else {
+                System.out.println("No such command in the system");
+            }
+
+        }
     }
 }

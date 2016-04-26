@@ -70,7 +70,6 @@ public class Bank implements Report {
     }
 
 
-
     @Override
     public void printReport() {
         System.out.println("Bank clients: ");

@@ -5,5 +5,6 @@ package com.luxoft.bankapp.networkcommands;
  */
 public interface NetworkCommand {
     void execute();
+
     void printCommandInfo();
 }

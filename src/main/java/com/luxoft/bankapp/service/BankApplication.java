@@ -6,14 +6,14 @@ import com.luxoft.bankapp.model.Bank;
 import java.util.Random;
 
 public class BankApplication {
-	
-	private static final String fileName = "data.csv";
-	private static final String csvSeparator = ";";
-	
-	private static Bank bank;
-	private static BankServiceImpl bankService;
-	private static Random r;
-	
+
+    private static final String fileName = "data.csv";
+    private static final String csvSeparator = ";";
+
+    private static Bank bank;
+    private static BankServiceImpl bankService;
+    private static Random r;
+
 	
 	/*private static void initialize(){
 		r = new Random();
@@ -53,7 +53,7 @@ public class BankApplication {
 		}
 		
 	}*/
-	
+
 //	private static void modifyBank(){
 //		List<Client> clients = bank.getClients();
 //		for(Client client : clients){
@@ -74,29 +74,25 @@ public class BankApplication {
 //		}
 //	}
 
-	public static void main(String[] args) {
-		if(args.length == 3 && args[0].equals("-gD")) {
-			DataGenerator.generateData(fileName, csvSeparator, Integer.parseInt(args[1]), Integer.parseInt(args[2]));
-		}
-		else if(args.length == 1 && args[0].equals("-report")){
-			BankReport bankReporter = new BankReport();
-			bankReporter.getNumberOfClients(bank);
-			bankReporter.getAccountsNumber(bank);
-			bankReporter.getBankCreditSum(bank);
-			bankReporter.getClientsSorted(bank);
-			bankReporter.getClientsByCity(bank);
-		}
-		else{
-			System.out.println("You have provided no arguments, program will now exit;");
-			System.exit(0);
-		}
+    public static void main(String[] args) {
+        if (args.length == 3 && args[0].equals("-gD")) {
+            DataGenerator.generateData(fileName, csvSeparator, Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+        } else if (args.length == 1 && args[0].equals("-report")) {
+            BankReport bankReporter = new BankReport();
+            bankReporter.getNumberOfClients(bank);
+            bankReporter.getAccountsNumber(bank);
+            bankReporter.getBankCreditSum(bank);
+            bankReporter.getClientsSorted(bank);
+            bankReporter.getClientsByCity(bank);
+        } else {
+            System.out.println("You have provided no arguments, program will now exit;");
+            System.exit(0);
+        }
 
-		bank.printReport();
-		System.out.println("\n------------------------------------------");
-		bank.printReport();
-	}
-
-
+        bank.printReport();
+        System.out.println("\n------------------------------------------");
+        bank.printReport();
+    }
 
 
 }

@@ -1,6 +1,5 @@
 package com.luxoft.bankapp.networkcommands;
 
-import com.luxoft.bankapp.model.Bank;
 import com.luxoft.bankapp.scanner.BankScanner;
 
 import java.io.IOException;
@@ -13,8 +12,9 @@ import static com.luxoft.bankapp.scanner.StringChecker.checkName;
 /**
  * Created by Adam on 22.04.2016.
  */
-public class GetClientInfoNetworkCommand extends  AbstractNetworkCommand{
+public class GetClientInfoNetworkCommand extends AbstractNetworkCommand {
     boolean isCorrectData = false;
+
     public GetClientInfoNetworkCommand(ObjectInputStream in, ObjectOutputStream out) {
         super(in, out);
     }
@@ -24,7 +24,7 @@ public class GetClientInfoNetworkCommand extends  AbstractNetworkCommand{
         sendMessage("CLIENTINFO", out);
 
         String name = "";
-        while(!isCorrectData) {
+        while (!isCorrectData) {
             System.out.println("Please type the name of the client as follows: \"name surname\".");
             name = BankScanner.getScanner().nextLine();
             isCorrectData = checkName(name);

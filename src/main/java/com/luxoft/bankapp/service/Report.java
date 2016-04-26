@@ -1,6 +1,7 @@
 package com.luxoft.bankapp.service;
 
 public interface Report {
-	void printReport();
-	String getReport();
+    void printReport();
+
+    String getReport();
 }
