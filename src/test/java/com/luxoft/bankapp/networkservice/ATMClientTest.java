@@ -2,7 +2,6 @@ package com.luxoft.bankapp.networkservice;
 
 import com.luxoft.bankapp.model.Client;
 import com.luxoft.bankapp.model.Gender;
-import com.luxoft.bankapp.networkthreads.BankServerThread;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -24,7 +23,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class ATMClientTest {
     private static final float AMOUNTOFCASH = 1000f;
-    private static final int AMOUNTOFTRANSACTIONS = 1000;
+    private static final int AMOUNTOFTRANSACTIONS = 10;
     private static final String NAME = "John Dorian";
     private static ExecutorService executorServerService = Executors.newSingleThreadExecutor();
 
@@ -32,12 +31,6 @@ public class ATMClientTest {
     public static void initialize() {
         Socket requestSocket;
         ObjectOutputStream out;
-        executorServerService.execute(new BankServerThread());
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         try {
             requestSocket = new Socket("localhost", 2004);
             out = new ObjectOutputStream(requestSocket.getOutputStream());
@@ -50,6 +43,7 @@ public class ATMClientTest {
             sendMessage(client, out);
             Thread.sleep(100);
             sendMessage("4", out);
+            sendMessage("bye", out);
             Thread.sleep(100);
             out.close();
 
@@ -125,6 +119,7 @@ public class ATMClientTest {
             sendMessage(name, out);
             Client client = (Client) in.readObject();
             sendMessage("4", out);
+            sendMessage("bye", out);
             in.close();
             out.close();
 

@@ -40,7 +40,6 @@ public class ServerThread implements Runnable {
             out = new ObjectOutputStream(connection.getOutputStream());
             out.flush();
             in = new ObjectInputStream(connection.getInputStream());
-            do {
                 try {
                     message = (String) in.readObject();
                     if (message.equals("ATM")) {
@@ -48,14 +47,13 @@ public class ServerThread implements Runnable {
                     } else if (message.equals("OFFICE")) {
                         RemoteOfficeService(in, out, bank);
                     }
-                    message = (String) in.readObject();
+
                 } catch (ClassNotFoundException classnot) {
                     System.err.println("Data received in unknown format");
                 }
-            } while (!message.equals("bye"));
             counterOfClients.decrementAndGet();
         } catch (EOFException e){
-            System.out.println("Connection closed");
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

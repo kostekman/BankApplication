@@ -55,7 +55,6 @@ public class BankRemoteOfficeClient {
                     System.out.println("No such command in the system");
                 }
             } while (!exit);
-            sendMessage("bye", out);
         } catch (UnknownHostException unknownHost) {
             System.err.println("You are trying to connect to an unknown host!");
         } catch (IOException ioException) {
@@ -72,7 +71,7 @@ public class BankRemoteOfficeClient {
         }
     }
 
-    private void initializeCommandMap(ObjectInputStream in, ObjectOutputStream out) {
+    private void initializeCommandMap(ObjectInputStream in, final ObjectOutputStream out) {
         commandMap.put("0", new GetBankStatisticsNetworkCommand(in, out));
         commandMap.put("1", new GetClientInfoNetworkCommand(in, out));
         commandMap.put("2", new AddClientNetworkCommand(in, out));
@@ -80,6 +79,7 @@ public class BankRemoteOfficeClient {
         commandMap.put("4", new NetworkCommand() { // 7 - Exit Command
             public void execute() {
                 BankScanner.closeScanner();
+                sendMessage("bye", out);
                 exit = true;
             }
 

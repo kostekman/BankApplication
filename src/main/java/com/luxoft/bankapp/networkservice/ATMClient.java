@@ -52,7 +52,6 @@ public class ATMClient {
                     sendMessage(amount, out);
                     message = (String) in.readObject();
                     System.out.println(message);
-                    message = (String) in.readObject();
 
                 } catch (ClassNotFoundException classNot) {
                     System.err.println("data received in unknown format");
