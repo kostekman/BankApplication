@@ -2,7 +2,8 @@ package com.luxoft.bankapp.networkservice;
 
 import com.luxoft.bankapp.model.Client;
 import com.luxoft.bankapp.model.Gender;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -12,8 +13,10 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import static com.luxoft.bankapp.networkservice.MessageSender.sendMessage;
 import static org.junit.Assert.assertEquals;
@@ -24,11 +27,11 @@ import static org.junit.Assert.assertEquals;
 public class ATMClientTest {
     private static final float AMOUNTOFCASH = 1000f;
     private static final int AMOUNTOFTRANSACTIONS = 10;
+    private static final int AMOUNTOFTHREADSMEASURINGTIME = 1000;
     private static final String NAME = "John Dorian";
-    private static ExecutorService executorServerService = Executors.newSingleThreadExecutor();
 
-    @BeforeClass
-    public static void initialize() {
+    @Before
+    public void initialize() {
         Socket requestSocket;
         ObjectOutputStream out;
         try {
@@ -77,11 +80,37 @@ public class ATMClientTest {
 
     }
 
+    @After
+    public void cleanup(){
+        Socket requestSocket;
+        ObjectOutputStream out;
+        try {
+            requestSocket = new Socket("localhost", 2004);
+            out = new ObjectOutputStream(requestSocket.getOutputStream());
+            out.flush();
+            sendMessage("OFFICE", out);
+            Thread.sleep(100);
+            sendMessage("REMOVECLIENT", out);
+            Thread.sleep(100);
+            sendMessage(NAME, out);
+            Thread.sleep(100);
+            sendMessage("4", out);
+            sendMessage("bye", out);
+            Thread.sleep(100);
+            out.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Test
     public void testTransactions() {
         List<Thread> listOfMocks = new ArrayList<>(AMOUNTOFTRANSACTIONS);
         for (int i = 0; i < AMOUNTOFTRANSACTIONS; i++) {
-            listOfMocks.add(new Thread(new BankClientMock()));
+            listOfMocks.add(new Thread(new BankClientMockRunnable()));
         }
         for (Thread mock : listOfMocks) {
             mock.start();
@@ -101,6 +130,29 @@ public class ATMClientTest {
         Float finalAmount = getAmount(NAME);
 
         assertEquals("Amounts are not equal", finalAmount, AMOUNTOFCASH - (float) AMOUNTOFTRANSACTIONS, 0.5);
+    }
+
+    @Test
+    public void testTimeOfExecution() {
+        ExecutorService executor = Executors.newFixedThreadPool(150);
+
+        List<Future<Long>> clientList = new ArrayList <>();
+        for (int i = 0; i < AMOUNTOFTHREADSMEASURINGTIME; i ++) {
+            Future future = executor.submit (new BankClientMockCallable());
+            clientList.add (future);
+        }
+        long totalAmount = 0;
+        for(Future<Long> future : clientList){
+            try {
+                totalAmount += future.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+        long avgTime = totalAmount/AMOUNTOFTHREADSMEASURINGTIME;
+        System.out.println("Average time of execution was: " + avgTime);
     }
 
     private Float getAmount(String name) {

@@ -9,7 +9,7 @@ import static com.luxoft.bankapp.networkservice.MessageSender.sendMessage;
 /**
  * Created by AKoscinski on 2016-04-26.
  */
-public class BankClientMock implements Runnable {
+public class BankClientMockRunnable implements Runnable {
     Socket requestSocket;
 
     @Override
@@ -38,7 +38,8 @@ public class BankClientMock implements Runnable {
     }
 
     public static void main(final String args[]) {
-        BankClientMock client = new BankClientMock();
+        BankClientMockRunnable client = new BankClientMockRunnable();
         client.run();
     }
+
 }
