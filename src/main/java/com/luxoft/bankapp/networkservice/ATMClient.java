@@ -32,7 +32,6 @@ public class ATMClient {
             out.flush();
             in = new ObjectInputStream(requestSocket.getInputStream());
             // 3: Communicating with the server
-            do {
                 try {
                     sendMessage("ATM", out);
                     String client;
@@ -58,7 +57,6 @@ public class ATMClient {
                 } catch (ClassNotFoundException classNot) {
                     System.err.println("data received in unknown format");
                 }
-            } while (!message.equals("bye"));
         } catch (UnknownHostException unknownHost) {
             System.err.println("You are trying to connect to an unknown host!");
         } catch (IOException ioException) {

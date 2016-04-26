@@ -2,6 +2,7 @@ package com.luxoft.bankapp.networkthreads;
 
 import com.luxoft.bankapp.model.Bank;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -25,11 +26,7 @@ public class ServerThread implements Runnable {
         return counterOfClients;
     }
 
-    private static AtomicInteger counterOfClients;
-
-    static {
-        counterOfClients.set(0);
-    }
+    private static AtomicInteger counterOfClients = new AtomicInteger(0);
 
     public ServerThread(Socket connection, Bank bank) {
         this.connection = connection;
@@ -57,6 +54,8 @@ public class ServerThread implements Runnable {
                 }
             } while (!message.equals("bye"));
             counterOfClients.decrementAndGet();
+        } catch (EOFException e){
+            System.out.println("Connection closed");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -66,6 +65,7 @@ public class ServerThread implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         }
     }
 }

@@ -43,10 +43,7 @@ public class ATMServerService {
             sendMessage("Transaction successful", out);
         } catch (BankException e) {
             sendMessage(e.toString(), out);
-        } finally {
-            sendMessage("bye", out);
         }
-
     }
 
 }

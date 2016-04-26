@@ -65,13 +65,13 @@ public abstract class AbstractAccount implements Account {
     }
 
     @Override
-    public void deposit(float x) {
+    synchronized public void deposit(float x) {
         balance += x;
 
     }
 
     @Override
-    public void withdraw(float x) throws BankException {
+    synchronized public void withdraw(float x) throws BankException {
         balance -= x;
 
     }

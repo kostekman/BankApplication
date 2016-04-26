@@ -29,7 +29,7 @@ public class RemoteOfficeServerService {
                     String name = (String) in.readObject();
                     Client client = bankService.findClient(bank, name);
                     if (client != null) {
-                        sendMessage(client.getReport(), out);
+                        sendMessage(client, out);
                     } else {
                         sendMessage("Client not found", out);
                     }

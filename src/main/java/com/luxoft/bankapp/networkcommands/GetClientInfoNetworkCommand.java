@@ -1,5 +1,6 @@
 package com.luxoft.bankapp.networkcommands;
 
+import com.luxoft.bankapp.model.Client;
 import com.luxoft.bankapp.scanner.BankScanner;
 
 import java.io.IOException;
@@ -37,12 +38,19 @@ public class GetClientInfoNetworkCommand extends AbstractNetworkCommand {
 
         try {
             sendMessage(name, out);
-            String report = ((String) in.readObject());
-            System.out.println(report);
+            Client client = ((Client) in.readObject());
+            System.out.println(client.getReport());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            try {
+                String message = (String) in.readObject();
+                System.out.println(message);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } catch (ClassNotFoundException e1) {
+                e1.printStackTrace();
+            }
         }
     }
 
