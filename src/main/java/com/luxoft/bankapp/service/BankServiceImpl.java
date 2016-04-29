@@ -45,8 +45,6 @@ public class BankServiceImpl implements BankService {
         try (FileOutputStream fos = new FileOutputStream(fileName);
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             oos.writeObject(client);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,11 +56,7 @@ public class BankServiceImpl implements BankService {
              ObjectInputStream ois = new ObjectInputStream(fis)) {
             Client client = (Client) ois.readObject();
             return client;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
         return null;

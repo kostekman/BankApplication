@@ -46,9 +46,7 @@ public class GetClientInfoNetworkCommand extends AbstractNetworkCommand {
             try {
                 String message = (String) in.readObject();
                 System.out.println(message);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            } catch (ClassNotFoundException e1) {
+            } catch (IOException | ClassNotFoundException e1) {
                 e1.printStackTrace();
             }
         }

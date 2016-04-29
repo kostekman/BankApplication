@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
  */
 public class BankServerThread implements Runnable {
     private final int POOL_SIZE = 20;
-    private Bank bank = new Bank();
+    private Bank bank = new Bank("test");
     private ServerSocket providerSocket;
     private Socket connection = null;
     boolean running = true;

@@ -113,9 +113,7 @@ public class AddClientNetworkCommand extends AbstractNetworkCommand {
         try {
             String message = (String) in.readObject();
             System.out.println(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

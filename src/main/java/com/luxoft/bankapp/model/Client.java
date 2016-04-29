@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class Client implements Report, Serializable {
 
-    private static int nextID = 1;
+    private static int nextID = 0;
 
     private String name;
     private int ID;

@@ -5,13 +5,17 @@ import com.luxoft.bankapp.service.Report;
 import java.util.*;
 
 public class Bank implements Report {
-
+    private static int nextID = 0;
+    private int id;
+    private String name;
     private Set<Client> clients;
     private List<ClientRegistrationListener> listeners;
 
     private Map<String, Client> clientNameMap;
 
-    public Bank() {
+    public Bank(String name) {
+        this.id = nextID++;
+        this.name = name;
         clients = new TreeSet<>(new Comparator<Client>() {
             @Override
             public int compare(Client c1, Client c2) {
@@ -29,6 +33,18 @@ public class Bank implements Report {
         listeners.add(new PrintClientListener());
         listeners.add(new EmailNotificationListener());
         listeners.add(new AddClientToMapListener());
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void addClient(Client client) {
@@ -87,6 +103,10 @@ public class Bank implements Report {
             sb.append(c.getReport());
         }
         return sb.toString();
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     private class PrintClientListener implements ClientRegistrationListener {

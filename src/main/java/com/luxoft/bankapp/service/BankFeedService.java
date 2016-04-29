@@ -2,7 +2,6 @@ package com.luxoft.bankapp.service;
 
 import com.luxoft.bankapp.model.Bank;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
@@ -49,8 +48,6 @@ public class BankFeedService {
 
             }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

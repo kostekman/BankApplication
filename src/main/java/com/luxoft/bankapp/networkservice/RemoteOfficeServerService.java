@@ -47,9 +47,7 @@ public class RemoteOfficeServerService {
                         sendMessage("Client not found", out);
                     }
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         } while (!command.equals("bye"));

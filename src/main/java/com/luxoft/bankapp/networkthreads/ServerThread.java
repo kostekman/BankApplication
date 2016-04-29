@@ -2,7 +2,6 @@ package com.luxoft.bankapp.networkthreads;
 
 import com.luxoft.bankapp.model.Bank;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -52,8 +51,6 @@ public class ServerThread implements Runnable {
                     System.err.println("Data received in unknown format");
                 }
             counterOfClients.decrementAndGet();
-        } catch (EOFException e){
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

@@ -39,9 +39,7 @@ public class RemoveClientNetworkCommand extends AbstractNetworkCommand {
             sendMessage(name, out);
             String report = ((String) in.readObject());
             System.out.println(report);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

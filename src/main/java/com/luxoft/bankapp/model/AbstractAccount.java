@@ -5,7 +5,7 @@ import com.luxoft.bankapp.exceptions.BankException;
 public abstract class AbstractAccount implements Account {
     private float balance;
     private int ID;
-    private static int nextID = 1;
+    private static int nextID = 0;
     private String accountType;
 
     public AbstractAccount(float balance) {
