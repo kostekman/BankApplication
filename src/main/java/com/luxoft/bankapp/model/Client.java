@@ -11,10 +11,8 @@ import java.util.Set;
 
 public class Client implements Report, Serializable {
 
-    private static int nextID = 0;
-
     private String name;
-    private int ID;
+    private int id;
     private String city;
     private Gender gender;
     private String phoneNumber;
@@ -35,7 +33,6 @@ public class Client implements Report, Serializable {
         this.accounts = new HashSet<>();
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.ID = nextID++;
         this.addAccount(new SavingAccount());
     }
 
@@ -55,8 +52,12 @@ public class Client implements Report, Serializable {
         return name != null ? name.hashCode() : 0;
     }
 
-    public int getID() {
-        return ID;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Set<Account> getAccounts() {

@@ -30,7 +30,7 @@ public class FindClientCommand extends AbstractCommand implements Command {
         Client client = this.getBankService().findClient(bank, name);
         if (client != null) {
             setActiveClient(client);
-            System.out.println("Current client is: " + client.getName() + " ID: " + Integer.valueOf(client.getID()).toString());
+            System.out.println("Current client is: " + client.getName() + " ID: " + Integer.valueOf(client.getId()).toString());
         } else {
             System.out.println("This client is not registered in the system, please try again");
         }

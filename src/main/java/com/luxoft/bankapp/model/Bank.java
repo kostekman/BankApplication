@@ -5,7 +5,6 @@ import com.luxoft.bankapp.service.Report;
 import java.util.*;
 
 public class Bank implements Report {
-    private static int nextID = 0;
     private int id;
     private String name;
     private Set<Client> clients;
@@ -14,7 +13,6 @@ public class Bank implements Report {
     private Map<String, Client> clientNameMap;
 
     public Bank(String name) {
-        this.id = nextID++;
         this.name = name;
         clients = new TreeSet<>(new Comparator<Client>() {
             @Override

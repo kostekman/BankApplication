@@ -15,6 +15,8 @@ public interface Account extends Report, Serializable {
 
     void withdraw(float x) throws BankException;
 
+    void setId(int id);
+
     int decimalValue();
 
     void parseFeed(Map<String, String> feed);

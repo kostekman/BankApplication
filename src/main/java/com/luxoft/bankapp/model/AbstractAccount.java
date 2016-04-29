@@ -4,13 +4,11 @@ import com.luxoft.bankapp.exceptions.BankException;
 
 public abstract class AbstractAccount implements Account {
     private float balance;
-    private int ID;
-    private static int nextID = 0;
+    private int id;
     private String accountType;
 
     public AbstractAccount(float balance) {
         this.balance = balance;
-        this.ID = nextID++;
     }
 
     public AbstractAccount() {
@@ -23,14 +21,14 @@ public abstract class AbstractAccount implements Account {
 
         AbstractAccount that = (AbstractAccount) o;
 
-        if (ID != that.ID) return false;
+        if (id != that.id) return false;
         return accountType.equals(that.accountType);
 
     }
 
     @Override
     public int hashCode() {
-        int result = ID;
+        int result = id;
         result = 31 * result;
         return result;
     }
@@ -60,8 +58,13 @@ public abstract class AbstractAccount implements Account {
         return balance;
     }
 
-    public int getID() {
-        return ID;
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

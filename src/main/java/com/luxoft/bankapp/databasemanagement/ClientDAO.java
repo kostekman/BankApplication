@@ -1,7 +1,8 @@
 package com.luxoft.bankapp.databasemanagement;
 
+import com.luxoft.bankapp.exceptions.ClientNotFoundException;
 import com.luxoft.bankapp.exceptions.DAOException;
-import com.luxoft.bankapp.model.Bank;
+import com.luxoft.bankapp.exceptions.TooManyClientsFoundException;
 import com.luxoft.bankapp.model.Client;
 
 import java.util.List;
@@ -12,11 +13,11 @@ import java.util.List;
 public interface ClientDAO {
     /**
             * Return client by its name, initialize client accounts.
-    * @param bank
+    * @param bankId
     * @param name
     * @return
-            * /
-    Client findClientByName (Bank bank, String name) throws DAOException;
+            */
+    Client findClientByName (int bankId, String name) throws DAOException, TooManyClientsFoundException, ClientNotFoundException;
 
     /**
             * Returns the list of all clients of the Bank
@@ -24,18 +25,18 @@ public interface ClientDAO {
     * @param bankId
     * @return
             */
-    List<Client> getAllClients (Bank bank) throws DAOException;
+    List<Client> getAllClients (int bankId) throws DAOException;
 
     /**
             * Method should insert new Client (if id == null)
     * Or update client in database
     * @param client
     */
-    void save (Client client) throws DAOException;
+    void save (Client client, int bankId) throws DAOException;
 
     /**
             * Method removes client from Database
-    * @param client
+    * @param clientId
     */
-    void remove (Client client) throws DAOException;
+    void remove (int clientId, int bankId) throws DAOException;
 }
