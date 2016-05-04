@@ -18,7 +18,7 @@ import java.util.List;
 public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
     @Override
     public void update(Account account) throws DAOException {
-        String sqlUpdateAccount = "UPDATE ACCOUNTS SET BALANCE = ?, OVERDRAFT = ? WHERE ACCOUNTS.ID = ?;";
+        String sqlUpdateAccount = "UPDATE ACCOUNTS SET BALANCE = ?, OVERDRAFT = ? WHERE ID = ?;";
         PreparedStatement stmt;
         try {
             openConnection();
@@ -117,13 +117,32 @@ public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
 
     @Override
     public void removeByClientId(int clientId) throws DAOException {
-        String sqlRemoveAccounts = "DELETE FROM TABLE ACCOUNTS AS A" +
+        String sqlRemoveAccounts = "DELETE FROM ACCOUNTS AS A" +
                 " WHERE A.CLIENT_ID = ?";
         PreparedStatement stmt;
         try {
             openConnection();
             stmt = conn.prepareStatement(sqlRemoveAccounts);
             stmt.setInt(1, clientId);
+            stmt.execute();
+            closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DAOException();
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void removeClientAccounts(int bankId, int clientId) throws DAOException {
+        String sqlRemoveClient = "DELETE FROM ACCOUNTS WHERE CLIENT_ID = ? AND BANK_ID = ?";
+        PreparedStatement stmt;
+        try {
+            openConnection();
+            stmt = conn.prepareStatement(sqlRemoveClient);
+            stmt.setInt(1, clientId);
+            stmt.setInt(2, bankId);
             stmt.execute();
             closeConnection();
         } catch (SQLException e) {

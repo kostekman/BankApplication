@@ -13,11 +13,10 @@ import java.util.List;
 public interface ClientDAO {
     /**
             * Return client by its name, initialize client accounts.
-    * @param bankId
     * @param name
     * @return
             */
-    Client findClientByName (int bankId, String name) throws DAOException, TooManyClientsFoundException, ClientNotFoundException;
+    Client findClientByName (String name) throws DAOException, TooManyClientsFoundException, ClientNotFoundException;
 
     /**
             * Returns the list of all clients of the Bank

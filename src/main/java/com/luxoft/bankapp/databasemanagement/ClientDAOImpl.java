@@ -18,42 +18,39 @@ import java.util.List;
 public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
 
     @Override
-    public Client findClientByName(int bankId, String name) throws DAOException, TooManyClientsFoundException, ClientNotFoundException {
-        String sqlSelect =  "SELECT C.ID, C.NAME, C.CITY, C.GENDER, C.PHONENUMBER," +
+    public Client findClientByName(String name) throws DAOException, TooManyClientsFoundException, ClientNotFoundException {
+        String sqlSelect = "SELECT C.ID, C.NAME, C.CITY, C.GENDER, C.PHONENUMBER," +
                 " C.EMAIL, C.INITIALOVERDRAFT FROM CLIENTS AS C" +
-                " INNER JOIN BANK_CLIENTS AS BC" +
-                " ON C.ID = BC.CLIENT_ID" +
-                " INNER JOIN BANKS AS B" +
-                " ON BC.BANK_ID = B.ID" +
-                " WHERE B.ID = ? AND C.NAME = ?";
+                " WHERE C.NAME = ?";
 
         PreparedStatement stmt;
-        Client client;
+        Client client = null;
 
-        try{
+        try {
 
-            int counter = countClientFindByNameResults(bankId, name);
-            if(counter == 0){
-                throw new ClientNotFoundException(bankId, name);
-            }
-            else if(counter > 1){
-                throw new TooManyClientsFoundException(counter, bankId, name);
-            }
-            else {
+            int counter = countClientFindByNameResults(name);
+            if (counter == 0) {
+                throw new ClientNotFoundException(name);
+            } else if (counter > 1) {
+                throw new TooManyClientsFoundException(counter, name);
+            } else {
+                openConnection();
                 stmt = conn.prepareStatement(sqlSelect);
-                stmt.setInt(1, bankId);
-                stmt.setString(2, name);
+                stmt.setString(1, name);
                 ResultSet clients = stmt.executeQuery();
                 Gender gender;
-                if (clients.getBoolean(3)) {
-                    gender = Gender.MALE;
-                } else {
-                    gender = Gender.FEMALE;
+                while (clients.next()) {
+                    if (clients.getBoolean(4)) {
+                        gender = Gender.MALE;
+                    } else {
+                        gender = Gender.FEMALE;
+                    }
+                    client = new Client(clients.getString(2),
+                            clients.getString(3), gender, clients.getString(5),
+                            clients.getString(6), clients.getFloat(7));
+                    client.setId(clients.getInt(1));
                 }
-                client = new Client(clients.getString(2),
-                        clients.getString(3), gender, clients.getString(5),
-                        clients.getString(6), clients.getFloat(7));
-                client.setId(clients.getInt(1));
+                closeConnection();
                 return client;
             }
         } catch (SQLException e) {
@@ -63,62 +60,63 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
         return null;
     }
 
-    private int countClientFindByNameResults(int bankId, String name) {
+    private int countClientFindByNameResults(String name) {
         String sqlCount = "SELECT COUNT(*) FROM CLIENTS AS C" +
-                " INNER JOIN BANK_CLIENTS AS BC" +
-                " ON C.ID = BC.CLIENT_ID" +
-                " INNER JOIN BANKS AS B" +
-                " ON BC.BANK_ID = B.ID" +
-                " WHERE B.ID = ? AND C.NAME = ?";
+                " WHERE C.NAME = ?";
         PreparedStatement stmt;
         try {
             openConnection();
             stmt = conn.prepareStatement(sqlCount);
-            stmt.setInt(1, bankId);
-            stmt.setString(2, name);
+            stmt.setString(1, name);
             ResultSet countedClients = stmt.executeQuery();
-            closeConnection();
-            return countedClients.getInt(1);
+            int counter = 0;
+            while (countedClients.next()) {
+                counter = countedClients.getInt(1);
+            }
+            return counter;
         } catch (DAOException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection();
         }
         return 0;
     }
 
     @Override
     public List<Client> getAllClients(int bankId) throws DAOException {
-        String sqlSelect =  "SELECT C.ID, C.NAME, C.CITY, C.GENDER, C.PHONENUMBER," +
-                            " C.EMAIL, C.INITIALOVERDRAFT FROM CLIENTS AS C" +
-                            " INNER JOIN BANK_CLIENTS AS BC" +
-                            " ON C.ID = BC.CLIENT_ID" +
-                            " INNER JOIN BANKS AS B" +
-                            " ON BC.BANK_ID = B.ID" +
-                            " WHERE B.ID = ?";
+        String sqlSelect = "SELECT C.ID, C.NAME, C.CITY, C.GENDER, C.PHONENUMBER," +
+                " C.EMAIL, C.INITIALOVERDRAFT FROM CLIENTS AS C" +
+                " INNER JOIN BANK_CLIENTS AS BC" +
+                " ON C.ID = BC.CLIENT_ID" +
+                " INNER JOIN BANKS AS B" +
+                " ON BC.BANK_ID = B.ID" +
+                " WHERE B.ID = ?";
         PreparedStatement stmt;
         List<Client> resultClientList = new LinkedList<>();
-        try{
+        try {
             openConnection();
             stmt = conn.prepareStatement(sqlSelect);
             stmt.setInt(1, bankId);
             ResultSet clients = stmt.executeQuery();
-            while(clients.next()){
+            while (clients.next()) {
                 Gender gender;
-                if(clients.getBoolean(3)){
+                if (clients.getBoolean(4)) {
                     gender = Gender.MALE;
-                }
-                else{
+                } else {
                     gender = Gender.FEMALE;
                 }
-                resultClientList.add(new Client(clients.getString(1),
-                        clients.getString(2), gender, clients.getString(4),
-                        clients.getString(5), clients.getFloat(6)));
+                Client client = new Client(clients.getString(2),
+                        clients.getString(3), gender, clients.getString(5),
+                        clients.getString(6), clients.getFloat(7));
+                client.setId(clients.getInt(1));
+                resultClientList.add(client);
             }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DAOException();
-        } finally{
+        } finally {
             closeConnection();
         }
         return resultClientList;
@@ -126,24 +124,34 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
 
     @Override
     public void save(Client client, int bankId) throws DAOException {
-        String sqlInsertClient = "INSERT INTO CLIENTS VALUES(?, ?, ?, ?, ?, ?);";
+        String sqlInsertClient = "INSERT INTO CLIENTS(NAME, CITY, GENDER," +
+                "PHONENUMBER, EMAIL, INITIALOVERDRAFT) " +
+                "VALUES(?, ?, ?, ?, ?, ?);";
         PreparedStatement stmt;
         try {
-            openConnection();
-            stmt = conn.prepareStatement(sqlInsertClient);
-            stmt.setString(1, client.getName());
-            stmt.setString(2, client.getCity());
-            stmt.setInt(3, client.getGender().toInt());
-            stmt.setString(4, client.getPhoneNumber());
-            stmt.setString(5, client.getEmail());
-            stmt.setFloat(6, client.getInitialOverdraft());
-            stmt.execute();
-            closeConnection();
-            client.setId(findClientByName(bankId, client.getName()).getId());
-            addToBankClientsTable(bankId, client.getId());
-        } catch (SQLException | ClientNotFoundException | TooManyClientsFoundException e) {
+            if (countClientFindByNameResults(client.getName()) == 1) {
+                addToBankClientsTable(bankId, client.getId());
+            } else {
+                openConnection();
+                stmt = conn.prepareStatement(sqlInsertClient);
+                stmt.setString(1, client.getName());
+                stmt.setString(2, client.getCity());
+                stmt.setBoolean(3, client.getGender().toBoolean());
+                stmt.setString(4, client.getPhoneNumber());
+                stmt.setString(5, client.getEmail());
+                stmt.setFloat(6, client.getInitialOverdraft());
+                stmt.execute();
+                closeConnection();
+                client.setId(findClientByName(client.getName()).getId());
+                addToBankClientsTable(bankId, client.getId());
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new DAOException();
+        } catch (ClientNotFoundException e) {
+            e.printStackTrace();
+        } catch (TooManyClientsFoundException e) {
+            e.printStackTrace();
         } finally {
             closeConnection();
         }
@@ -152,7 +160,7 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
     private void addToBankClientsTable(int bankId, int clientId) {
         String sqlInsertBankClients = "INSERT INTO BANK_CLIENTS VALUES(?, ?);";
         PreparedStatement stmt;
-        try{
+        try {
             openConnection();
             stmt = conn.prepareStatement(sqlInsertBankClients);
             stmt.setInt(1, bankId);
@@ -169,17 +177,28 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
 
     @Override
     public void remove(int clientId, int bankId) throws DAOException {
-        String sqlRemoveClient =    "REMOVE COLUMN FROM TABLE BANK_CLIENTS" +
-                                    " WHERE BANK_ID = ? AND CLIENT_ID = ?";
+        String sqlCountClients = "SELECT COUNT(*) FROM BANK_CLIENTS" +
+                " WHERE CLIENT_ID = ?";
         PreparedStatement stmt;
-        try{
+        AccountDAO accountDAO = new AccountDAOImpl();
+
+        int counter = 0;
+        try {
             openConnection();
-            stmt = conn.prepareStatement(sqlRemoveClient);
-            stmt.setInt(1, bankId);
-            stmt.setInt(2, clientId);
-            stmt.execute();
+            stmt = conn.prepareStatement(sqlCountClients);
+            stmt.setInt(1, clientId);
+            ResultSet counterResult = stmt.executeQuery();
+            while (counterResult.next()) {
+                counter = counterResult.getInt(1);
+            }
             closeConnection();
-            removeClientsAccoutns(clientId);
+            accountDAO.removeClientAccounts(bankId, clientId);
+            removeClientFromBank(bankId, clientId);
+            if(counter == 1) {
+                removeClientFromDatabase(clientId);
+            }
+
+
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DAOException();
@@ -188,15 +207,38 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
         }
     }
 
-    private void removeClientsAccoutns(int clientId) throws DAOException {
-        String sqlRemoveClient =    "DROP FROM ACCOUNTS WHERE CLIENT_ID = ?";
+    private void removeClientFromBank(int bankId, int clientId) throws DAOException {
+        String sqlRemoveClient = "DELETE FROM BANK_CLIENTS" +
+                " WHERE CLIENT_ID = ? AND BANK_ID = ?";
         PreparedStatement stmt;
-        try{
+        try {
+            openConnection();
+            stmt = conn.prepareStatement(sqlRemoveClient);
+            stmt.setInt(1, clientId);
+            stmt.setInt(2, bankId);
+            stmt.execute();
+
+            closeConnection();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DAOException();
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void removeClientFromDatabase(int clientId) throws DAOException {
+        String sqlRemoveClient = "DELETE FROM CLIENTS WHERE ID = ?";
+        PreparedStatement stmt;
+        try {
             openConnection();
             stmt = conn.prepareStatement(sqlRemoveClient);
             stmt.setInt(1, clientId);
             stmt.execute();
             closeConnection();
+
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DAOException();

@@ -12,5 +12,8 @@ public interface AccountDAO {
     public void update(Account account) throws DAOException;
     public void add(Account account, int BankId, int ClientId) throws DAOException;
     public void removeByClientId(int idClient) throws DAOException;
+
+    void removeClientAccounts(int bankId, int clientId) throws DAOException;
+
     public List<Account> getClientAccounts(int idClient) throws DAOException;
 }

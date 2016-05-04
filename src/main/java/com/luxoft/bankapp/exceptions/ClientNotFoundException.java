@@ -5,7 +5,7 @@ package com.luxoft.bankapp.exceptions;
  */
 public class ClientNotFoundException extends Exception{
 
-    public ClientNotFoundException(int bankId, String name) {
-        super("bankid: " + bankId + ", name:" + name);
+    public ClientNotFoundException(String name) {
+        super("name:" + name);
     }
 }

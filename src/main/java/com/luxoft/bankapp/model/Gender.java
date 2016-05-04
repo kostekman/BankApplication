@@ -2,21 +2,21 @@ package com.luxoft.bankapp.model;
 
 public enum Gender {
 
-    MALE(1) {
+    MALE(true) {
         public void work() {
             System.out.println("I work like an engineer");
         }
-    }, FEMALE(0) {
+    }, FEMALE(false) {
         public void work() {
             System.out.println("I work like a doctor");
         }
     };
 
     private String salutation;
-    private int value;
+    private boolean value;
 
-    Gender(int value) {
-        if(value == 1){
+    Gender(boolean value) {
+        if(value == true){
             this.salutation = "Mr. ";
         }
         else {
@@ -29,7 +29,7 @@ public enum Gender {
         return salutation;
     }
 
-    public int toInt(){
+    public boolean toBoolean(){
         return value;
     }
 

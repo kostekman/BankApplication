@@ -14,7 +14,7 @@ public class BaseDAOImpl implements BaseDAO {
     public Connection openConnection() throws DAOException {
         try {
             Class.forName("org.h2.Driver"); // this is driver for H2
-            conn = DriverManager.getConnection("jdbc:h2:~/bank",
+            conn = DriverManager.getConnection("jdbc:h2:~/banktest",
                     "sa", // login
                     "" // password
             );
