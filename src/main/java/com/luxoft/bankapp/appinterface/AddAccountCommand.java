@@ -40,9 +40,9 @@ public class AddAccountCommand extends AbstractCommand implements Command {
 
             }
             setCorrectData(false);
-            getBankService().addAccount(getActiveClient(), new CheckingAccount(0.0f, Float.valueOf(checkingOverdraft)));
+            getBankService().addAccount(getActiveClient(), new CheckingAccount(0.0f, Float.valueOf(checkingOverdraft)), bank.getId());
         } else {
-            getBankService().addAccount(getActiveClient(), new SavingAccount(0.0f));
+            getBankService().addAccount(getActiveClient(), new SavingAccount(0.0f), bank.getId());
         }
     }
 

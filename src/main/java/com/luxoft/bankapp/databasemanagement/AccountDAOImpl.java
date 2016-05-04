@@ -17,32 +17,29 @@ import java.util.List;
  */
 public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
     @Override
-    public void save(Account account) throws DAOException {
-        /*String sqlUpdateAccount = "UPDATE ACCOUNTS;";
+    public void update(Account account) throws DAOException {
+        String sqlUpdateAccount = "UPDATE ACCOUNTS SET BALANCE = ?, OVERDRAFT = ? WHERE ACCOUNTS.ID = ?;";
         PreparedStatement stmt;
         try {
             openConnection();
-            stmt = conn.prepareStatement(sqlAddAccount);
-            stmt.setInt(1, bankId);
-            stmt.setInt(2, clientId);
-            stmt.setFloat(3, account.getBalance());
-            if (account.getAccountType().equals("s")) {
-                stmt.setFloat(4, Types.INTEGER);
+            stmt = conn.prepareStatement(sqlUpdateAccount);
+            stmt.setFloat(1, account.getBalance());
+            if (account instanceof CheckingAccount) {
+                stmt.setFloat(2, ((CheckingAccount) account).getOverdraft());
             } else {
-                stmt.setFloat(4, ((CheckingAccount) account).getOverdraft());
+                stmt.setNull(2, Types.FLOAT);
             }
+            stmt.setInt(3, account.getId());
             stmt.execute();
             closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DAOException();
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }*/
+        }
     }
 
     @Override
-    public void add(Account account, int bankId, int clientId) throws DAOException {
+    public synchronized void add(Account account, int bankId, int clientId) throws DAOException {
         String sqlAddAccount = "INSERT INTO ACCOUNTS VALUES(?, ?, ?, ?);";
         PreparedStatement stmt;
         try {
@@ -52,24 +49,75 @@ public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
             stmt.setInt(2, clientId);
             stmt.setFloat(3, account.getBalance());
             if (account.getAccountType().equals("s")) {
-                stmt.setFloat(4, Types.INTEGER);
+                stmt.setNull(4, Types.FLOAT);
             } else {
                 stmt.setFloat(4, ((CheckingAccount) account).getOverdraft());
             }
             stmt.execute();
             closeConnection();
+            setAccountId(account, bankId, clientId);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DAOException();
-        } catch (DAOException e) {
+        }
+    }
+
+    private void setAccountId(Account account, int bankId, int clientId) throws DAOException {
+        if (account instanceof CheckingAccount) {
+            setCheckingAccountId(account, bankId, clientId);
+        } else if (account instanceof SavingAccount) {
+            setSavingAccountId(account, bankId, clientId);
+        }
+    }
+
+    private void setSavingAccountId(Account account, int bankId, int clientId) throws DAOException {
+        String sqlSelectNull = "SELECT A.ID FROM ACCOUNTS AS A" +
+                " WHERE A.CLIENT_ID = ? AND A.BANK_ID = ? AND A.OVERDRAFT IS NULL";
+        PreparedStatement stmt;
+        try {
+            openConnection();
+            stmt = conn.prepareStatement(sqlSelectNull);
+            stmt.setInt(1, clientId);
+            stmt.setInt(2, bankId);
+            ResultSet accounts = stmt.executeQuery();
+            while (accounts.next()) {
+                account.setId(accounts.getInt(1));
+            }
+            closeConnection();
+        } catch (SQLException e) {
             e.printStackTrace();
+            throw new DAOException();
+        } finally {
+            closeConnection();
+        }
+    }
+
+    private void setCheckingAccountId(Account account, int bankId, int clientId) throws DAOException {
+        String sqlSelectNotNull = "SELECT A.ID FROM ACCOUNTS AS A" +
+                " WHERE A.CLIENT_ID = ? AND A.BANK_ID = ? AND A.OVERDRAFT IS NOT NULL";
+        PreparedStatement stmt;
+        try {
+            openConnection();
+            stmt = conn.prepareStatement(sqlSelectNotNull);
+            stmt.setInt(1, clientId);
+            stmt.setInt(2, bankId);
+            ResultSet accounts = stmt.executeQuery();
+            while (accounts.next()) {
+                account.setId(accounts.getInt(1));
+            }
+            closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DAOException();
+        } finally {
+            closeConnection();
         }
     }
 
 
     @Override
     public void removeByClientId(int clientId) throws DAOException {
-        String sqlRemoveAccounts = "DROP COLUMN FROM TABLE ACCOUNTS AS A" +
+        String sqlRemoveAccounts = "DELETE FROM TABLE ACCOUNTS AS A" +
                 " WHERE A.CLIENT_ID = ?";
         PreparedStatement stmt;
         try {

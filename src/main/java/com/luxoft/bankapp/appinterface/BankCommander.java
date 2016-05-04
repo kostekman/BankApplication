@@ -11,6 +11,7 @@ import java.util.Map;
 public class BankCommander {
     private static BankService bankService = new BankServiceImpl();
     private static Map<String, Command> commandMap;
+    private static Bank activeBank;
 
     static {
         commandMap = new HashMap<>();
@@ -42,15 +43,16 @@ public class BankCommander {
     }
 
     public static void main(String args[]) {
-        Bank bank = new Bank();
+
         while (true) {
+            activeBank = DBSelectBankCommander.getBank();
             System.out.println("\n");
             for (String name : commandMap.keySet()) {
                 commandMap.get(name).printCommandInfo();
             }
             String commandString = BankScanner.getScanner().nextLine();
             if (commandMap.keySet().contains(commandString)) {
-                commandMap.get(commandString).execute(bank);
+                commandMap.get(commandString).execute(activeBank);
             } else {
                 System.out.println("No such command in the system");
             }

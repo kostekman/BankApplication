@@ -36,9 +36,9 @@ public class ATMServerService {
         float amount = (Float) in.readObject();
         try {
             if (operation.equals("1")) {
-                client.getActiveAccount().withdraw(amount);
+                bankService.withdrawFromAccount(client.getActiveAccount(), amount);
             } else if (operation.equals("0")) {
-                client.getActiveAccount().deposit(amount);
+                bankService.depositOnAccount(client.getActiveAccount(), amount);
             }
             sendMessage("Transaction successful", out);
         } catch (BankException e) {

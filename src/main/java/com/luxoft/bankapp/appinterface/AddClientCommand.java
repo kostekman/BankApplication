@@ -103,7 +103,7 @@ public class AddClientCommand extends AbstractCommand implements Command {
         Client newClient = new Client(name, city, enumGender, email, phoneNumber, Float.valueOf(overdraft));
         getBankService().addClient(bank, newClient);
         setActiveClient(newClient);
-        System.out.println("Client successfully created");
+        System.out.println("Client successfully created, please create an account");
 
     }
 

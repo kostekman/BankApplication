@@ -18,7 +18,7 @@ public class Client implements Report, Serializable {
     private String phoneNumber;
     private String email;
     private Set<Account> accounts;
-    private Account activeAccount = null;
+    private Account activeAccount = new SavingAccount(0f);
     private float initialOverdraft;
 
     public Client() {
@@ -33,7 +33,6 @@ public class Client implements Report, Serializable {
         this.accounts = new HashSet<>();
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.addAccount(new SavingAccount());
     }
 
     @Override
@@ -56,7 +55,7 @@ public class Client implements Report, Serializable {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id){
         this.id = id;
     }
 

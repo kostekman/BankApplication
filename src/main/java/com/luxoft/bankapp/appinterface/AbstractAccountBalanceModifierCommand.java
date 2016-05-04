@@ -13,7 +13,7 @@ public abstract class AbstractAccountBalanceModifierCommand extends AbstractComm
     public boolean withdrawFromAccount(String amount) {
         boolean completed = false;
         try {
-            getActiveClient().getActiveAccount().withdraw(Float.valueOf(amount));
+            getBankService().withdrawFromAccount(getActiveClient().getActiveAccount(), Float.valueOf(amount));
             completed = true;
             System.out.printf("You have successfully withdrawed %s from the account", amount);
         } catch (BankException e) {
@@ -25,12 +25,12 @@ public abstract class AbstractAccountBalanceModifierCommand extends AbstractComm
     }
 
     public void depositOnAccount(String amount) {
-        getActiveClient().getActiveAccount().deposit(Float.valueOf(amount));
+        getBankService().depositOnAccount(getActiveClient().getActiveAccount(), Float.valueOf(amount));
         System.out.printf("You have successfully deposited %s on the account", amount);
     }
 
     public void depositOnAccount(Client client, String amount) {
-        client.getActiveAccount().deposit(Float.valueOf(amount));
+        getBankService().depositOnAccount(client.getActiveAccount(), Float.valueOf(amount));
         System.out.printf("You have successfully deposited %s on the account", amount);
     }
 

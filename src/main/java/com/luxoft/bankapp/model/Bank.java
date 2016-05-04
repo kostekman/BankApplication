@@ -1,5 +1,11 @@
 package com.luxoft.bankapp.model;
 
+import com.luxoft.bankapp.databasemanagement.BankDAO;
+import com.luxoft.bankapp.databasemanagement.BankDAOImpl;
+import com.luxoft.bankapp.databasemanagement.ClientDAO;
+import com.luxoft.bankapp.databasemanagement.ClientDAOImpl;
+import com.luxoft.bankapp.exceptions.BankNotFoundException;
+import com.luxoft.bankapp.exceptions.DAOException;
 import com.luxoft.bankapp.service.Report;
 
 import java.util.*;
@@ -105,6 +111,45 @@ public class Bank implements Report {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Bank bank = (Bank) o;
+
+        if (id != bank.id) return false;
+        return name != null ? name.equals(bank.name) : bank.name == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
+    }
+
+    public static Bank getBankByName(String bankname) {
+        BankDAO bankDB = new BankDAOImpl();
+        ClientDAO clientDB = new ClientDAOImpl();
+        try {
+            Bank bank = bankDB.getBankByName(bankname);
+            List<Client> clientsList = clientDB.getAllClients(bank.getId());
+
+            for(Client c : clientsList){
+                bank.addClient(c);
+            }
+            return bank;
+        } catch (DAOException e) {
+            e.printStackTrace();
+        } catch (BankNotFoundException e) {
+            System.out.println("Bank not found");
+            e.printStackTrace();
+        }
+        return new Bank("");
     }
 
     private class PrintClientListener implements ClientRegistrationListener {

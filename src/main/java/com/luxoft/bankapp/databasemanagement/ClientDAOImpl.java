@@ -179,6 +179,24 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
             stmt.setInt(2, clientId);
             stmt.execute();
             closeConnection();
+            removeClientsAccoutns(clientId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DAOException();
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void removeClientsAccoutns(int clientId) throws DAOException {
+        String sqlRemoveClient =    "DROP FROM ACCOUNTS WHERE CLIENT_ID = ?";
+        PreparedStatement stmt;
+        try{
+            openConnection();
+            stmt = conn.prepareStatement(sqlRemoveClient);
+            stmt.setInt(1, clientId);
+            stmt.execute();
+            closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DAOException();
