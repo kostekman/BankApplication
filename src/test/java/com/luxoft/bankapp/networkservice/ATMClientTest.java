@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class ATMClientTest {
     private static final float AMOUNTOFCASH = 1000f;
-    private static final int AMOUNTOFTRANSACTIONS = 10;
+    private static final int AMOUNTOFTRANSACTIONS = 1000;
     private static final int AMOUNTOFTHREADSMEASURINGTIME = 1000;
     private static final String NAME = "John Dorian";
 
