@@ -40,7 +40,7 @@ public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
 
     @Override
     public synchronized void add(Account account, int bankId, int clientId) throws DAOException {
-        String sqlAddAccount = "INSERT INTO ACCOUNTS VALUES(?, ?, ?, ?);";
+        String sqlAddAccount = "INSERT INTO ACCOUNTS(BANK_ID, CLIENT_ID, BALANCE, OVERDRAFT) VALUES(?, ?, ?, ?);";
         PreparedStatement stmt;
         try {
             openConnection();
@@ -111,26 +111,6 @@ public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
             throw new DAOException();
         } finally {
             closeConnection();
-        }
-    }
-
-
-    @Override
-    public void removeByClientId(int clientId) throws DAOException {
-        String sqlRemoveAccounts = "DELETE FROM ACCOUNTS AS A" +
-                " WHERE A.CLIENT_ID = ?";
-        PreparedStatement stmt;
-        try {
-            openConnection();
-            stmt = conn.prepareStatement(sqlRemoveAccounts);
-            stmt.setInt(1, clientId);
-            stmt.execute();
-            closeConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DAOException();
-        } catch (DAOException e) {
-            e.printStackTrace();
         }
     }
 

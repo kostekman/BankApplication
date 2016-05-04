@@ -1,9 +1,6 @@
 package com.luxoft.bankapp.model;
 
-import com.luxoft.bankapp.databasemanagement.BankDAO;
-import com.luxoft.bankapp.databasemanagement.BankDAOImpl;
-import com.luxoft.bankapp.databasemanagement.ClientDAO;
-import com.luxoft.bankapp.databasemanagement.ClientDAOImpl;
+import com.luxoft.bankapp.databasemanagement.*;
 import com.luxoft.bankapp.exceptions.BankNotFoundException;
 import com.luxoft.bankapp.exceptions.DAOException;
 import com.luxoft.bankapp.service.Report;
@@ -135,12 +132,17 @@ public class Bank implements Report {
     public static Bank getBankByName(String bankname) {
         BankDAO bankDB = new BankDAOImpl();
         ClientDAO clientDB = new ClientDAOImpl();
+        AccountDAO accountDAO = new AccountDAOImpl();
         try {
             Bank bank = bankDB.getBankByName(bankname);
             List<Client> clientsList = clientDB.getAllClients(bank.getId());
 
             for(Client c : clientsList){
                 bank.addClient(c);
+                List<Account> accountsList = accountDAO.getClientAccounts(c.getId());
+                for(Account a : accountsList){
+                    c.addAccount(a);
+                }
             }
             return bank;
         } catch (DAOException e) {

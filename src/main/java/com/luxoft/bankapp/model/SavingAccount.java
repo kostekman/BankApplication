@@ -8,7 +8,7 @@ import java.util.Map;
 public class SavingAccount extends AbstractAccount implements Account {
 
     public SavingAccount(float balance) {
-        super(balance);
+        super(balance, "s");
     }
 
     public SavingAccount() {

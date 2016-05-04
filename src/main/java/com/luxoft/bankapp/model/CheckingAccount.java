@@ -9,7 +9,7 @@ public class CheckingAccount extends AbstractAccount implements Account {
 	private float overdraft;
 	
 	public CheckingAccount(float balance, float overdraft) {
-		super(balance);
+		super(balance, "c");
 		this.overdraft = overdraft;
 	}
 

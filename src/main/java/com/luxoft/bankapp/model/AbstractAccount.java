@@ -7,8 +7,9 @@ public abstract class AbstractAccount implements Account {
     private int id;
     private String accountType;
 
-    public AbstractAccount(float balance) {
+    public AbstractAccount(float balance, String accountType) {
         this.balance = balance;
+        this.accountType = accountType;
     }
 
     public AbstractAccount() {
