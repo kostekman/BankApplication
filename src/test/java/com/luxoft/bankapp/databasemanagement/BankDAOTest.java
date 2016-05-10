@@ -8,7 +8,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
+
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by AKoscinski on 2016-05-04.
@@ -36,12 +40,12 @@ public class BankDAOTest {
     }
 
     @Test
-    public void gettingBankByName() throws DAOException, BankNotFoundException {
+    public void gettingBankByName() throws DAOException, BankNotFoundException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         BankDAO bankDAO = new BankDAOImpl();
         Bank bank = new Bank("test");
         bankDAO.save(bank);
         Bank otherBank = bankDAO.getBankByName("test");
-        assertEquals("Banks not the same", bank, otherBank);
+        assertTrue("Banks not the same", TestService.isEquals(bank, otherBank));
     }
 
     @Test(expected = BankNotFoundException.class)

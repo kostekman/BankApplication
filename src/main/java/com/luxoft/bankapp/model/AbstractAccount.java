@@ -1,10 +1,12 @@
 package com.luxoft.bankapp.model;
 
+import com.luxoft.bankapp.databasemanagement.NoDB;
 import com.luxoft.bankapp.exceptions.BankException;
 
 public abstract class AbstractAccount implements Account {
     private float balance;
     private int id;
+    @NoDB
     private String accountType;
 
     public AbstractAccount(float balance, String accountType) {

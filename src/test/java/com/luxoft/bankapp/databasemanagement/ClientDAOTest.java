@@ -11,6 +11,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import static junit.framework.TestCase.assertEquals;
@@ -40,7 +42,7 @@ public class ClientDAOTest {
     }
 
     @Test
-    public void addClient() throws DAOException, TooManyClientsFoundException, ClientNotFoundException {
+    public void addClient() throws DAOException, TooManyClientsFoundException, ClientNotFoundException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         BankDAO bankDAO = new BankDAOImpl();
         Bank bank = new Bank("test");
         bankDAO.save(bank);
@@ -49,7 +51,7 @@ public class ClientDAOTest {
         Client client = new Client("Testy McTestface", "Test", Gender.MALE, "test@test.test", "737737737", 1f);
         clientDAO.save(client, 1);
         Client newClient = clientDAO.findClientByName("Testy McTestface");
-        assertEquals("no clients found", client, newClient);
+        assertTrue("no clients found", TestService.isEquals(client, newClient));
     }
 
     @Test(expected = ClientNotFoundException.class)

@@ -10,9 +10,12 @@ import java.util.*;
 public class Bank implements Report {
     private int id;
     private String name;
+    @NoDB
     private Set<Client> clients;
+    @NoDB
     private List<ClientRegistrationListener> listeners;
 
+    @NoDB
     private Map<String, Client> clientNameMap;
 
     public Bank(String name) {
@@ -137,10 +140,10 @@ public class Bank implements Report {
             Bank bank = bankDB.getBankByName(bankname);
             List<Client> clientsList = clientDB.getAllClients(bank.getId());
 
-            for(Client c : clientsList){
+            for (Client c : clientsList) {
                 bank.addClient(c);
                 List<Account> accountsList = accountDAO.getClientAccounts(c.getId());
-                for(Account a : accountsList){
+                for (Account a : accountsList) {
                     c.addAccount(a);
                 }
             }

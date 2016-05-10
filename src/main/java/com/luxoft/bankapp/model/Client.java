@@ -1,5 +1,6 @@
 package com.luxoft.bankapp.model;
 
+import com.luxoft.bankapp.databasemanagement.NoDB;
 import com.luxoft.bankapp.exceptions.FeedException;
 import com.luxoft.bankapp.service.Report;
 
@@ -17,8 +18,11 @@ public class Client implements Report, Serializable {
     private Gender gender;
     private String phoneNumber;
     private String email;
+    @NoDB
     private Set<Account> accounts;
+    @NoDB
     private Account activeAccount = new SavingAccount(0f);
+    @NoDB
     private float initialOverdraft;
 
     public Client() {
@@ -55,7 +59,7 @@ public class Client implements Report, Serializable {
         return id;
     }
 
-    public void setId(int id){
+    public void setId(int id) {
         this.id = id;
     }
 
