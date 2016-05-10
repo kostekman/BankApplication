@@ -45,9 +45,9 @@ public class ATMServerService {
             }
             sendMessage("Transaction successful", out);
             long endTime = System.nanoTime();
-            BankAppLogger.getLogger().log(Level.INFO, "Connection duration: " + (endTime - startTime)/1000000);
+            BankAppLogger.log(Level.INFO, "Connection duration: " + (endTime - startTime)/1000000);
         } catch (BankException e) {
-            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
             sendMessage(e.toString(), out);
         }
     }

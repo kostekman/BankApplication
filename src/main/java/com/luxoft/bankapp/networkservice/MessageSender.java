@@ -16,7 +16,7 @@ public class MessageSender {
             out.flush();
             System.out.println("server>" + msg);
         } catch (IOException ioException) {
-            BankAppLogger.getLogger().log(Level.SEVERE, ioException.getMessage(), ioException);
+            BankAppLogger.log(Level.SEVERE, ioException.getMessage(), ioException);
             ioException.printStackTrace();
         }
     }

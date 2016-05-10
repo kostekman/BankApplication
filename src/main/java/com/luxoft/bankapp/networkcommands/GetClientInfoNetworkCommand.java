@@ -43,15 +43,15 @@ public class GetClientInfoNetworkCommand extends AbstractNetworkCommand {
             Client client = ((Client) in.readObject());
             System.out.println(client.getReport());
         } catch (IOException e) {
-            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
             try {
                 String message = (String) in.readObject();
                 System.out.println(message);
             } catch (IOException | ClassNotFoundException e1) {
-                BankAppLogger.getLogger().log(Level.SEVERE, e1.getMessage(), e1);
+                BankAppLogger.log(Level.SEVERE, e1.getMessage(), e1);
                 e1.printStackTrace();
             }
         }

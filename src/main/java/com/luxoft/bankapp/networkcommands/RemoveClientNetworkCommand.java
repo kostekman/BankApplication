@@ -42,7 +42,7 @@ public class RemoveClientNetworkCommand extends AbstractNetworkCommand {
             String report = ((String) in.readObject());
             System.out.println(report);
         } catch (IOException | ClassNotFoundException e) {
-            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
             e.printStackTrace();
         }
     }

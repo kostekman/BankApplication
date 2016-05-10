@@ -23,7 +23,7 @@ public class BankServerMonitor implements Runnable {
             try {
                 Thread.sleep(10000);
             } catch (InterruptedException e) {
-                BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+                BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
                 e.printStackTrace();
             }
         }

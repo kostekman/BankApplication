@@ -51,7 +51,7 @@ public class BankFeedService {
             }
 
         } catch (IOException e) {
-            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
             e.printStackTrace();
         }
     }

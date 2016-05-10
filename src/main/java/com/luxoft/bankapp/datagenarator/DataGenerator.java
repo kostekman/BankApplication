@@ -46,7 +46,7 @@ public class DataGenerator {
             printWriter.println(stringBuilder.toString());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 

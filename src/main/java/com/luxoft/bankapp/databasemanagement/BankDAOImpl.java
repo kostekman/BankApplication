@@ -33,7 +33,7 @@ public class BankDAOImpl extends BaseDAOImpl implements BankDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
             throw new DAOException();
         } finally {
             closeConnection();
@@ -53,11 +53,11 @@ public class BankDAOImpl extends BaseDAOImpl implements BankDAO {
             Bank newBank = getBankByName(bank.getName());
             bank.setId(newBank.getId());
             closeConnection();
-            BankAppLogger.getLogger().log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Bank with id: " + newBank.getId() + "saved");
+            BankAppLogger.log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Bank with id: " + newBank.getId() + "saved");
 
         } catch (SQLException | BankNotFoundException e) {
             e.printStackTrace();
-            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
             throw new DAOException();
         }
     }
@@ -76,10 +76,10 @@ public class BankDAOImpl extends BaseDAOImpl implements BankDAO {
                 throw new BankNotFoundException(bank.getName());
             }
             closeConnection();
-            BankAppLogger.getLogger().log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Bank with id: " + bank.getId() + "removed");
+            BankAppLogger.log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Bank with id: " + bank.getId() + "removed");
         } catch (SQLException | BankNotFoundException e) {
             e.printStackTrace();
-            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
             throw new DAOException();
         }
     }
@@ -93,10 +93,10 @@ public class BankDAOImpl extends BaseDAOImpl implements BankDAO {
             stmt.setInt(1, id);
             stmt.execute();
             closeConnection();
-            BankAppLogger.getLogger().log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Accounts for bank with with id: " + id + "removed");
+            BankAppLogger.log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Accounts for bank with with id: " + id + "removed");
         } catch (SQLException e) {
             e.printStackTrace();
-            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
             throw new DAOException();
         }
     }
@@ -110,10 +110,10 @@ public class BankDAOImpl extends BaseDAOImpl implements BankDAO {
             stmt.setInt(1, id);
             stmt.execute();
             closeConnection();
-            BankAppLogger.getLogger().log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Clients for bank with with id: " + id + "removed");
+            BankAppLogger.log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Clients for bank with with id: " + id + "removed");
         } catch (SQLException e) {
             e.printStackTrace();
-            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
             throw new DAOException();
         }
     }

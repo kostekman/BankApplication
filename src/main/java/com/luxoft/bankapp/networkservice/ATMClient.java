@@ -56,14 +56,14 @@ public class ATMClient {
                     System.out.println(message);
 
                 } catch (ClassNotFoundException classNot) {
-                    BankAppLogger.getLogger().log(Level.SEVERE, classNot.getMessage(), classNot);
+                    BankAppLogger.log(Level.SEVERE, classNot.getMessage(), classNot);
                     System.err.println("data received in unknown format");
                 }
         } catch (UnknownHostException unknownHost) {
-            BankAppLogger.getLogger().log(Level.SEVERE, unknownHost.getMessage(), unknownHost);
+            BankAppLogger.log(Level.SEVERE, unknownHost.getMessage(), unknownHost);
             System.err.println("You are trying to connect to an unknown host!");
         } catch (IOException ioException) {
-            BankAppLogger.getLogger().log(Level.SEVERE, ioException.getMessage(), ioException);
+            BankAppLogger.log(Level.SEVERE, ioException.getMessage(), ioException);
             ioException.printStackTrace();
         } finally {
             // 4: Closing connection
@@ -72,7 +72,7 @@ public class ATMClient {
                 out.close();
                 requestSocket.close();
             } catch (IOException ioException) {
-                BankAppLogger.getLogger().log(Level.SEVERE, ioException.getMessage(), ioException);
+                BankAppLogger.log(Level.SEVERE, ioException.getMessage(), ioException);
                 ioException.printStackTrace();
             }
         }

@@ -47,27 +47,27 @@ public class ServerThread implements Runnable {
                 try {
                     message = (String) in.readObject();
                     if (message.equals("ATM")) {
-                        BankAppLogger.getLogger().log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "ATM connected");
+                        BankAppLogger.log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "ATM connected");
                         ATMService(in, out, bank);
                     } else if (message.equals("OFFICE")) {
-                        BankAppLogger.getLogger().log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "OFFICE connected");
+                        BankAppLogger.log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "OFFICE connected");
                         RemoteOfficeService(in, out, bank);
                     }
 
                 } catch (ClassNotFoundException classnot) {
-                    BankAppLogger.getLogger().log(Level.SEVERE, classnot.getMessage(), classnot);
+                    BankAppLogger.log(Level.SEVERE, classnot.getMessage(), classnot);
                     System.err.println("Data received in unknown format");
                 }
             counterOfClients.decrementAndGet();
         } catch (IOException e) {
-            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
             e.printStackTrace();
         } finally {
             try {
                 out.close();
                 in.close();
             } catch (IOException e) {
-                BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+                BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
                 e.printStackTrace();
             }
 

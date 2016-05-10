@@ -30,7 +30,7 @@ public class BankServiceImpl implements BankService {
         try {
             clientDAO.save(client, bank.getId());
         } catch (DAOException e) {
-            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
             e.printStackTrace();
         }
     }
@@ -42,7 +42,7 @@ public class BankServiceImpl implements BankService {
         try {
             clientDAO.remove(client.getId(), bank.getId());
         } catch (DAOException e) {
-            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
             e.printStackTrace();
         }
     }
@@ -54,7 +54,7 @@ public class BankServiceImpl implements BankService {
         try {
             accountDAO.add(account, bankId, client.getId());
         } catch (DAOException e) {
-            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
             e.printStackTrace();
         }
     }
@@ -71,7 +71,7 @@ public class BankServiceImpl implements BankService {
         try {
             accountDAO.update(account);
         } catch (DAOException e) {
-            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
             e.printStackTrace();
         }
     }
@@ -83,7 +83,7 @@ public class BankServiceImpl implements BankService {
         try {
             accountDAO.update(account);
         } catch (DAOException e) {
-            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
             e.printStackTrace();
         }
     }
@@ -99,7 +99,7 @@ public class BankServiceImpl implements BankService {
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             oos.writeObject(client);
         } catch (IOException e) {
-            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
             e.printStackTrace();
         }
     }
@@ -111,7 +111,7 @@ public class BankServiceImpl implements BankService {
             Client client = (Client) ois.readObject();
             return client;
         } catch (ClassNotFoundException | IOException e) {
-            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
             e.printStackTrace();
         }
         return null;
