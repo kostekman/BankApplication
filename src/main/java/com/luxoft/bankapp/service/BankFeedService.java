@@ -1,5 +1,6 @@
 package com.luxoft.bankapp.service;
 
+import com.luxoft.bankapp.loggers.BankAppLogger;
 import com.luxoft.bankapp.model.Bank;
 
 import java.io.FileReader;
@@ -7,6 +8,7 @@ import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 /**
  * Created by AKoscinski on 2016-04-18.
@@ -49,6 +51,7 @@ public class BankFeedService {
             }
 
         } catch (IOException e) {
+            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
             e.printStackTrace();
         }
     }

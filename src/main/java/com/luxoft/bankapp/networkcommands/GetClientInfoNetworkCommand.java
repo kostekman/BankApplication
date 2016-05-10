@@ -1,11 +1,13 @@
 package com.luxoft.bankapp.networkcommands;
 
+import com.luxoft.bankapp.loggers.BankAppLogger;
 import com.luxoft.bankapp.model.Client;
 import com.luxoft.bankapp.scanner.BankScanner;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.logging.Level;
 
 import static com.luxoft.bankapp.networkservice.MessageSender.sendMessage;
 import static com.luxoft.bankapp.scanner.StringChecker.checkName;
@@ -41,12 +43,15 @@ public class GetClientInfoNetworkCommand extends AbstractNetworkCommand {
             Client client = ((Client) in.readObject());
             System.out.println(client.getReport());
         } catch (IOException e) {
+            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
+            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
             try {
                 String message = (String) in.readObject();
                 System.out.println(message);
             } catch (IOException | ClassNotFoundException e1) {
+                BankAppLogger.getLogger().log(Level.SEVERE, e1.getMessage(), e1);
                 e1.printStackTrace();
             }
         }

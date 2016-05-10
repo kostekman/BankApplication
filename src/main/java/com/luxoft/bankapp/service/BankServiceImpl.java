@@ -6,11 +6,13 @@ import com.luxoft.bankapp.databasemanagement.ClientDAO;
 import com.luxoft.bankapp.databasemanagement.ClientDAOImpl;
 import com.luxoft.bankapp.exceptions.BankException;
 import com.luxoft.bankapp.exceptions.DAOException;
+import com.luxoft.bankapp.loggers.BankAppLogger;
 import com.luxoft.bankapp.model.Account;
 import com.luxoft.bankapp.model.Bank;
 import com.luxoft.bankapp.model.Client;
 
 import java.io.*;
+import java.util.logging.Level;
 
 public class BankServiceImpl implements BankService {
 
@@ -28,6 +30,7 @@ public class BankServiceImpl implements BankService {
         try {
             clientDAO.save(client, bank.getId());
         } catch (DAOException e) {
+            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
             e.printStackTrace();
         }
     }
@@ -39,6 +42,7 @@ public class BankServiceImpl implements BankService {
         try {
             clientDAO.remove(client.getId(), bank.getId());
         } catch (DAOException e) {
+            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
             e.printStackTrace();
         }
     }
@@ -50,6 +54,7 @@ public class BankServiceImpl implements BankService {
         try {
             accountDAO.add(account, bankId, client.getId());
         } catch (DAOException e) {
+            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
             e.printStackTrace();
         }
     }
@@ -66,6 +71,7 @@ public class BankServiceImpl implements BankService {
         try {
             accountDAO.update(account);
         } catch (DAOException e) {
+            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
             e.printStackTrace();
         }
     }
@@ -77,6 +83,7 @@ public class BankServiceImpl implements BankService {
         try {
             accountDAO.update(account);
         } catch (DAOException e) {
+            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
             e.printStackTrace();
         }
     }
@@ -92,6 +99,7 @@ public class BankServiceImpl implements BankService {
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             oos.writeObject(client);
         } catch (IOException e) {
+            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
             e.printStackTrace();
         }
     }
@@ -103,6 +111,7 @@ public class BankServiceImpl implements BankService {
             Client client = (Client) ois.readObject();
             return client;
         } catch (ClassNotFoundException | IOException e) {
+            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
             e.printStackTrace();
         }
         return null;

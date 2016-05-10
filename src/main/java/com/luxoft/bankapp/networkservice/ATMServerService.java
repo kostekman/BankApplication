@@ -1,6 +1,7 @@
 package com.luxoft.bankapp.networkservice;
 
 import com.luxoft.bankapp.exceptions.BankException;
+import com.luxoft.bankapp.loggers.BankAppLogger;
 import com.luxoft.bankapp.model.Bank;
 import com.luxoft.bankapp.model.Client;
 import com.luxoft.bankapp.service.BankService;
@@ -9,6 +10,7 @@ import com.luxoft.bankapp.service.BankServiceImpl;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.logging.Level;
 
 import static com.luxoft.bankapp.networkservice.MessageSender.sendMessage;
 
@@ -19,6 +21,7 @@ public class ATMServerService {
 
 
     public static void ATMService(ObjectInputStream in, ObjectOutputStream out, Bank bank) throws IOException, ClassNotFoundException {
+        long startTime = System.nanoTime();
         String message;
         BankService bankService = new BankServiceImpl();
 
@@ -41,7 +44,10 @@ public class ATMServerService {
                 bankService.depositOnAccount(client.getActiveAccount(), amount);
             }
             sendMessage("Transaction successful", out);
+            long endTime = System.nanoTime();
+            BankAppLogger.getLogger().log(Level.INFO, "Connection duration: " + (endTime - startTime)/1000000);
         } catch (BankException e) {
+            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
             sendMessage(e.toString(), out);
         }
     }

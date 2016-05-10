@@ -1,5 +1,7 @@
 package com.luxoft.bankapp.networkthreads;
 
+import com.luxoft.bankapp.loggers.BankAppLogger;
+import com.luxoft.bankapp.loggers.CurrentDateAndTime;
 import com.luxoft.bankapp.model.Bank;
 
 import java.io.IOException;
@@ -7,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
 
 import static com.luxoft.bankapp.networkservice.ATMServerService.ATMService;
 import static com.luxoft.bankapp.networkservice.RemoteOfficeServerService.RemoteOfficeService;
@@ -36,28 +39,35 @@ public class ServerThread implements Runnable {
     public void run() {
 
         try {
+
+
             out = new ObjectOutputStream(connection.getOutputStream());
             out.flush();
             in = new ObjectInputStream(connection.getInputStream());
                 try {
                     message = (String) in.readObject();
                     if (message.equals("ATM")) {
+                        BankAppLogger.getLogger().log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "ATM connected");
                         ATMService(in, out, bank);
                     } else if (message.equals("OFFICE")) {
+                        BankAppLogger.getLogger().log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "OFFICE connected");
                         RemoteOfficeService(in, out, bank);
                     }
 
                 } catch (ClassNotFoundException classnot) {
+                    BankAppLogger.getLogger().log(Level.SEVERE, classnot.getMessage(), classnot);
                     System.err.println("Data received in unknown format");
                 }
             counterOfClients.decrementAndGet();
         } catch (IOException e) {
+            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
             e.printStackTrace();
         } finally {
             try {
                 out.close();
                 in.close();
             } catch (IOException e) {
+                BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
                 e.printStackTrace();
             }
 

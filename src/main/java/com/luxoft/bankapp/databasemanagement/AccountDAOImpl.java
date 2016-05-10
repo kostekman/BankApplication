@@ -1,6 +1,8 @@
 package com.luxoft.bankapp.databasemanagement;
 
 import com.luxoft.bankapp.exceptions.DAOException;
+import com.luxoft.bankapp.loggers.BankAppLogger;
+import com.luxoft.bankapp.loggers.CurrentDateAndTime;
 import com.luxoft.bankapp.model.Account;
 import com.luxoft.bankapp.model.CheckingAccount;
 import com.luxoft.bankapp.model.SavingAccount;
@@ -11,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * Created by AKoscinski on 2016-04-29.
@@ -32,6 +35,7 @@ public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
             stmt.setInt(3, account.getId());
             stmt.execute();
             closeConnection();
+            BankAppLogger.getLogger().log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | Account id" + account.getId() + "updated");
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DAOException();
@@ -56,6 +60,7 @@ public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
             stmt.execute();
             closeConnection();
             setAccountId(account, bankId, clientId);
+            BankAppLogger.getLogger().log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | Account id" + account.getId() + "created");
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DAOException();
@@ -125,8 +130,10 @@ public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
             stmt.setInt(2, bankId);
             stmt.execute();
             closeConnection();
+            BankAppLogger.getLogger().log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | Accounts for client_id: " + clientId + "and bankId: " + bankId + "removed");
         } catch (SQLException e) {
             e.printStackTrace();
+            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
             throw new DAOException();
         } catch (DAOException e) {
             e.printStackTrace();
@@ -160,6 +167,7 @@ public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
             closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
+            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
             throw new DAOException();
         } finally {
             closeConnection();
@@ -185,6 +193,7 @@ public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
             closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
+            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
             throw new DAOException();
         } finally {
             closeConnection();

@@ -3,9 +3,11 @@ package com.luxoft.bankapp.model;
 import com.luxoft.bankapp.databasemanagement.*;
 import com.luxoft.bankapp.exceptions.BankNotFoundException;
 import com.luxoft.bankapp.exceptions.DAOException;
+import com.luxoft.bankapp.loggers.BankAppLogger;
 import com.luxoft.bankapp.service.Report;
 
 import java.util.*;
+import java.util.logging.Level;
 
 public class Bank implements Report {
     private int id;
@@ -150,9 +152,11 @@ public class Bank implements Report {
             return bank;
         } catch (DAOException e) {
             e.printStackTrace();
+            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
         } catch (BankNotFoundException e) {
             System.out.println("Bank not found");
             e.printStackTrace();
+            BankAppLogger.getLogger().log(Level.INFO, e.getMessage(), e);
         }
         return new Bank("");
     }

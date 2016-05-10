@@ -1,5 +1,6 @@
 package com.luxoft.bankapp.networkservice;
 
+import com.luxoft.bankapp.loggers.BankAppLogger;
 import com.luxoft.bankapp.networkcommands.*;
 import com.luxoft.bankapp.scanner.BankScanner;
 
@@ -11,6 +12,7 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 import static com.luxoft.bankapp.networkservice.MessageSender.sendMessage;
 import static com.luxoft.bankapp.scanner.BankScanner.getScanner;
@@ -56,8 +58,10 @@ public class BankRemoteOfficeClient {
                 }
             } while (!exit);
         } catch (UnknownHostException unknownHost) {
+            BankAppLogger.getLogger().log(Level.SEVERE, unknownHost.getMessage(), unknownHost);
             System.err.println("You are trying to connect to an unknown host!");
         } catch (IOException ioException) {
+            BankAppLogger.getLogger().log(Level.SEVERE, ioException.getMessage(), ioException);
             ioException.printStackTrace();
         } finally {
             // 4: Closing connection
@@ -66,6 +70,7 @@ public class BankRemoteOfficeClient {
                 out.close();
                 requestSocket.close();
             } catch (IOException ioException) {
+                BankAppLogger.getLogger().log(Level.SEVERE, ioException.getMessage(), ioException);
                 ioException.printStackTrace();
             }
         }

@@ -1,8 +1,11 @@
 package com.luxoft.bankapp.datagenarator;
 
+import com.luxoft.bankapp.loggers.BankAppLogger;
+
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Random;
+import java.util.logging.Level;
 
 public class DataGenerator {
 
@@ -43,6 +46,7 @@ public class DataGenerator {
             printWriter.println(stringBuilder.toString());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
         }
     }
 

@@ -1,6 +1,9 @@
 package com.luxoft.bankapp.networkthreads;
 
+import com.luxoft.bankapp.loggers.BankAppLogger;
+
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
 
 /**
  * Created by AKoscinski on 2016-04-26.
@@ -20,6 +23,7 @@ public class BankServerMonitor implements Runnable {
             try {
                 Thread.sleep(10000);
             } catch (InterruptedException e) {
+                BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
                 e.printStackTrace();
             }
         }

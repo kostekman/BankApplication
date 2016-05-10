@@ -1,5 +1,6 @@
 package com.luxoft.bankapp.networkthreads;
 
+import com.luxoft.bankapp.loggers.BankAppLogger;
 import com.luxoft.bankapp.model.Bank;
 
 import java.io.IOException;
@@ -7,6 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
 
 /**
  * Created by AKoscinski on 2016-04-18.
@@ -36,6 +38,7 @@ public class BankServerThread implements Runnable {
             executorServerService.shutdown();
 
         } catch (IOException ioException) {
+            BankAppLogger.getLogger().log(Level.SEVERE, ioException.getMessage(), ioException);
             ioException.printStackTrace();
         }
     }

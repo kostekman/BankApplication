@@ -1,5 +1,6 @@
 package com.luxoft.bankapp.networkservice;
 
+import com.luxoft.bankapp.loggers.BankAppLogger;
 import com.luxoft.bankapp.scanner.BankScanner;
 
 import java.io.IOException;
@@ -7,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.logging.Level;
 
 import static com.luxoft.bankapp.networkservice.MessageSender.sendMessage;
 import static com.luxoft.bankapp.scanner.BankScanner.getScanner;
@@ -54,11 +56,14 @@ public class ATMClient {
                     System.out.println(message);
 
                 } catch (ClassNotFoundException classNot) {
+                    BankAppLogger.getLogger().log(Level.SEVERE, classNot.getMessage(), classNot);
                     System.err.println("data received in unknown format");
                 }
         } catch (UnknownHostException unknownHost) {
+            BankAppLogger.getLogger().log(Level.SEVERE, unknownHost.getMessage(), unknownHost);
             System.err.println("You are trying to connect to an unknown host!");
         } catch (IOException ioException) {
+            BankAppLogger.getLogger().log(Level.SEVERE, ioException.getMessage(), ioException);
             ioException.printStackTrace();
         } finally {
             // 4: Closing connection
@@ -67,6 +72,7 @@ public class ATMClient {
                 out.close();
                 requestSocket.close();
             } catch (IOException ioException) {
+                BankAppLogger.getLogger().log(Level.SEVERE, ioException.getMessage(), ioException);
                 ioException.printStackTrace();
             }
         }
