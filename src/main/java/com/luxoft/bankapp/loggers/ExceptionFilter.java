@@ -10,9 +10,6 @@ public class ExceptionFilter implements Filter {
     @Override
     public boolean isLoggable(LogRecord record) {
         String msg = record.getMessage();
-        if(msg.contains("EX")){
-            return true;
-        }
-        return false;
+        return msg.contains("EX");
     }
 }

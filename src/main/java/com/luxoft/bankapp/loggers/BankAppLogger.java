@@ -26,8 +26,8 @@ public class BankAppLogger {
         connectionLogger.setLevel(Level.INFO);
         try {
             Handler handler = new FileHandler("src\\main\\resources\\ConnectionLog.log");
-            exceptionLogger.addHandler(handler);
-            exceptionLogger.setFilter(new ConnectionFilter());
+            connectionLogger.addHandler(handler);
+            connectionLogger.setFilter(new ConnectionFilter());
             handler.setFormatter(new SimpleFormatter());
         } catch (Exception e) {
             e.printStackTrace();
@@ -51,13 +51,13 @@ public class BankAppLogger {
     public static void log(Level level, String message){
         exceptionLogger.log(level, message);
         connectionLogger.log(level, message);
-        connectionLogger.log(level, message);
+        databaseLogger.log(level, message);
     }
 
     public static void log(Level level, String message, Exception e){
         exceptionLogger.log(level, message, e);
         connectionLogger.log(level, message, e);
-        connectionLogger.log(level, message, e);
+        databaseLogger.log(level, message, e);
     }
 
 }
