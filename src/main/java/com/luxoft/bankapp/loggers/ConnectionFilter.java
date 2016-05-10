@@ -10,7 +10,7 @@ public class ConnectionFilter implements Filter {
     @Override
     public boolean isLoggable(LogRecord record) {
         String msg = record.getMessage();
-        if(msg.startsWith("CONN")){
+        if(msg.contains("CONN")){
             return true;
         }
         return false;

@@ -152,11 +152,11 @@ public class Bank implements Report {
             return bank;
         } catch (DAOException e) {
             e.printStackTrace();
-            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);
         } catch (BankNotFoundException e) {
             System.out.println("Bank not found");
             e.printStackTrace();
-            BankAppLogger.log(Level.INFO, e.getMessage(), e);
+            BankAppLogger.log(Level.INFO, "EX " + e.getMessage(), e);
         }
         return new Bank("");
     }

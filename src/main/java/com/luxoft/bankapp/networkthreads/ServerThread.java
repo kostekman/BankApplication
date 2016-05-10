@@ -60,14 +60,14 @@ public class ServerThread implements Runnable {
                 }
             counterOfClients.decrementAndGet();
         } catch (IOException e) {
-            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);
             e.printStackTrace();
         } finally {
             try {
                 out.close();
                 in.close();
             } catch (IOException e) {
-                BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
+                BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);
                 e.printStackTrace();
             }
 

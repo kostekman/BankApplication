@@ -58,7 +58,7 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);
         }
 
         return null;
@@ -80,10 +80,10 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
             return counter;
         } catch (DAOException e) {
             e.printStackTrace();
-            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);
         } catch (SQLException e) {
             e.printStackTrace();
-            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);
         } finally {
             closeConnection();
         }
@@ -121,7 +121,7 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);
             throw new DAOException();
         } finally {
             closeConnection();
@@ -153,12 +153,12 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
                 client.setId(findClientByName(client.getName()).getId());
                 addToBankClientsTable(bankId, client.getId());
                 closeConnection();
-                BankAppLogger.log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Client with id: " + client.getId() + "created and added to bank with id: " + bankId);
+                BankAppLogger.log(Level.INFO, "DB " + CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Client with id: " + client.getId() + "created and added to bank with id: " + bankId);
 
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);
             throw new DAOException();
         } catch (ClientNotFoundException e) {
             e.printStackTrace();
@@ -179,10 +179,10 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
             closeConnection();
         } catch (DAOException e) {
             e.printStackTrace();
-            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);
         } catch (SQLException e) {
             e.printStackTrace();
-            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);
         }
     }
 
@@ -214,7 +214,7 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);
             throw new DAOException();
         } catch (DAOException e) {
             e.printStackTrace();
@@ -233,12 +233,12 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
             stmt.execute();
 
             closeConnection();
-            BankAppLogger.log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Client with id: " + clientId + "removed from bank with id: " + bankId);
+            BankAppLogger.log(Level.INFO, "DB " + CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Client with id: " + clientId + "removed from bank with id: " + bankId);
 
 
         } catch (SQLException e) {
             e.printStackTrace();
-            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);
             throw new DAOException();
         } catch (DAOException e) {
             e.printStackTrace();
@@ -254,11 +254,11 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
             stmt.setInt(1, clientId);
             stmt.execute();
             closeConnection();
-            BankAppLogger.log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Client with id: " + clientId + "removed from database");
+            BankAppLogger.log(Level.INFO, "DB " + CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Client with id: " + clientId + "removed from database");
 
         } catch (SQLException e) {
             e.printStackTrace();
-            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);
             throw new DAOException();
         } catch (DAOException e) {
             e.printStackTrace();

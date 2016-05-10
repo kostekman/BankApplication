@@ -26,7 +26,7 @@ public class GetBankStatisticsNetworkCommand extends AbstractNetworkCommand {
             BankInfo report = ((BankInfo) in.readObject());
             System.out.println(report.getBankReport());
         } catch (IOException | ClassNotFoundException e) {
-            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);
             e.printStackTrace();
         }
     }

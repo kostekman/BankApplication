@@ -49,7 +49,7 @@ public class BankApplication {
 				}
 			}
 		} catch (IOException e) {
-		    BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+		    BankAppLogger.getLogger().log(Level.SEVERE, "EX " + e.getMessage(), e);
 			e.printStackTrace();
 		}
 		
@@ -67,7 +67,7 @@ public class BankApplication {
 //						try {
 //							account.withdraw(Math.abs(r.nextFloat()*(float)Math.abs(r.nextInt())%1000));
 //						} catch (BankException e) {
-//                             BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+//                             BankAppLogger.getLogger().log(Level.SEVERE, "EX " + e.getMessage(), e);
 //							System.out.printf("You have exceeded possible withdraw by: %f", e.toString());
 //							e.printStackTrace();
 //						}

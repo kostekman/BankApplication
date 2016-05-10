@@ -1,7 +1,5 @@
 package com.luxoft.bankapp.loggers;
 
-import com.luxoft.bankapp.service.BankApplication;
-
 import java.util.logging.*;
 
 /**
@@ -10,7 +8,7 @@ import java.util.logging.*;
 public class BankAppLogger {
     private static Logger exceptionLogger;
     static{
-        exceptionLogger = Logger.getLogger(BankApplication.class.getName());
+        exceptionLogger = Logger.getLogger(ExceptionFilter.class.getName());
         exceptionLogger.setLevel(Level.SEVERE);
         try {
             Handler handler = new FileHandler("src\\main\\resources\\ExceptionLog.log");
@@ -24,7 +22,7 @@ public class BankAppLogger {
 
     private static Logger connectionLogger;
     static{
-        connectionLogger = Logger.getLogger(BankApplication.class.getName());
+        connectionLogger = Logger.getLogger(ConnectionFilter.class.getName());
         connectionLogger.setLevel(Level.INFO);
         try {
             Handler handler = new FileHandler("src\\main\\resources\\ConnectionLog.log");
@@ -38,7 +36,7 @@ public class BankAppLogger {
 
     private static Logger databaseLogger;
     static{
-        databaseLogger = Logger.getLogger(BankApplication.class.getName());
+        databaseLogger = Logger.getLogger(DBfilter.class.getName());
         databaseLogger.setLevel(Level.INFO);
         try {
             Handler handler = new FileHandler("src\\main\\resources\\DatabaseLog.log");

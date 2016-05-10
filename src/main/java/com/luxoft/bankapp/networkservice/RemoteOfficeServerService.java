@@ -53,7 +53,7 @@ public class RemoteOfficeServerService {
                 long endTime = System.nanoTime();
                 BankAppLogger.log(Level.INFO, "Connection duration: " + (endTime - startTime)/1000000);
             } catch (IOException | ClassNotFoundException e) {
-                BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
+                BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);
                 e.printStackTrace();
             }
         } while (!command.equals("bye"));

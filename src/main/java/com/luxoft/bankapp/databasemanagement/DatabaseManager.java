@@ -47,14 +47,14 @@ public class DatabaseManager extends BaseDAOImpl {
             stmt = conn.prepareStatement(sql);
             stmt.execute();
             closeConnection();
-            BankAppLogger.getLogger().log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Database created");
+            BankAppLogger.log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Database created");
 
         }catch (DAOException e) {
             e.printStackTrace();
-            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);
         } catch (SQLException e) {
             e.printStackTrace();
-            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);
         }
     }
 
@@ -67,14 +67,14 @@ public class DatabaseManager extends BaseDAOImpl {
             stmt = conn.prepareStatement(sql);
             stmt.execute();
             closeConnection();
-            BankAppLogger.getLogger().log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Database dropped");
+            BankAppLogger.log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Database dropped");
 
         }catch (DAOException e) {
             e.printStackTrace();
-            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);
         } catch (SQLException e) {
             e.printStackTrace();
-            BankAppLogger.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);
         }
     }
 }

@@ -116,7 +116,7 @@ public class AddClientNetworkCommand extends AbstractNetworkCommand {
             String message = (String) in.readObject();
             System.out.println(message);
         } catch (IOException | ClassNotFoundException e) {
-            BankAppLogger.log(Level.SEVERE, e.getMessage(), e);
+            BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);
             e.printStackTrace();
         }
     }

@@ -10,7 +10,7 @@ public class DBfilter implements Filter {
     @Override
     public boolean isLoggable(LogRecord record) {
         String msg = record.getMessage();
-        if(msg.startsWith("DB")){
+        if(msg.contains("DB")){
             return true;
         }
         return false;
