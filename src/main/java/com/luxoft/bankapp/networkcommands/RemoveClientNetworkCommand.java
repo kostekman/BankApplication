@@ -15,7 +15,7 @@ import static com.luxoft.bankapp.scanner.StringChecker.checkName;
  * Created by Adam on 22.04.2016.
  */
 public class RemoveClientNetworkCommand extends AbstractNetworkCommand {
-    boolean isCorrectData = false;
+    private boolean isCorrectData = false;
 
     public RemoveClientNetworkCommand(ObjectInputStream in, ObjectOutputStream out) {
         super(in, out);

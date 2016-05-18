@@ -41,9 +41,9 @@ public class SerializationTest {
         client.addAccount(new CheckingAccount(300f, 200f));
         client.addAccount(new SavingAccount(300f));
 
-        bankService.saveClient(client, filePath);
+        bankService.saveClient(client);
 
-        Client newClient = bankService.loadClient(filePath);
+        Client newClient = bankService.loadClient();
 
         assertEquals("Objects are not the same", client, newClient);
         System.out.println(newClient.toString());

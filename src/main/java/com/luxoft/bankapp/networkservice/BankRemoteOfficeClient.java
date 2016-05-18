@@ -26,10 +26,10 @@ public class BankRemoteOfficeClient {
     private ObjectInputStream in;
     private boolean exit = false;
 
-    private Map<String, NetworkCommand> commandMap = new HashMap<>();
+    private final Map<String, NetworkCommand> commandMap = new HashMap<>();
 
 
-    void run() {
+    private void run() {
         try {
             System.out.println("Select host: ");
             String serverAddress = getScanner().nextLine();

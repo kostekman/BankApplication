@@ -57,18 +57,18 @@ public class BankFeedServiceTests {
 
     @Test
     public void testIfFileIsLoaded() {
-        bankFeedService.loadFeed(filePath);
+        bankFeedService.loadFeed();
     }
 
     @Test
     public void testParsingAndLoadingToClientMap() {
-        bankFeedService.loadFeed(filePath);
+        bankFeedService.loadFeed();
         assertEquals("Client info is not loaded properly", "John Kubrick", bankFeedService.getClientMap().get("name"));
     }
 
     @Test
     public void testParsingAndLoadingToAccountMap() {
-        bankFeedService.loadFeed(filePath);
+        bankFeedService.loadFeed();
         assertEquals("Account info is not loaded properly", "John Kubrick", bankFeedService.getAccountMap().get("name"));
     }
 

@@ -13,12 +13,12 @@ public class Bank implements Report {
     private int id;
     private String name;
     @NoDB
-    private Set<Client> clients;
+    private final Set<Client> clients;
     @NoDB
-    private List<ClientRegistrationListener> listeners;
+    private final List<ClientRegistrationListener> listeners;
 
     @NoDB
-    private Map<String, Client> clientNameMap;
+    private final Map<String, Client> clientNameMap;
 
     public Bank(String name) {
         this.name = name;

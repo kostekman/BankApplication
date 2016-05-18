@@ -125,7 +125,7 @@ public class Client implements Report, Serializable {
         this.email = email;
     }
 
-    public String getClientSalutation() {
+    private String getClientSalutation() {
         return gender.getSalutation();
     }
 

@@ -9,9 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BankCommander {
-    private static BankService bankService = new BankServiceImpl();
-    private static Map<String, Command> commandMap;
-    private static Bank activeBank;
+    private static final BankService bankService = new BankServiceImpl();
+    private static final Map<String, Command> commandMap;
 
     static {
         commandMap = new HashMap<>();
@@ -45,7 +44,7 @@ public class BankCommander {
     public static void main(String args[]) {
 
         while (true) {
-            activeBank = DBSelectBankCommander.getBank();
+            Bank activeBank = DBSelectBankCommander.getBank();
             System.out.println("\n");
             for (String name : commandMap.keySet()) {
                 commandMap.get(name).printCommandInfo();

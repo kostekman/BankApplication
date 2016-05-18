@@ -12,11 +12,11 @@ public enum Gender {
         }
     };
 
-    private String salutation;
-    private boolean value;
+    private final String salutation;
+    private final boolean value;
 
     Gender(boolean value) {
-        if(value == true){
+        if(value){
             this.salutation = "Mr. ";
         }
         else {

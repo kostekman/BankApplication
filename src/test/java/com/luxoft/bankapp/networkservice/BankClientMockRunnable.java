@@ -10,7 +10,7 @@ import static com.luxoft.bankapp.networkservice.MessageSender.sendMessage;
  * Created by AKoscinski on 2016-04-26.
  */
 public class BankClientMockRunnable implements Runnable {
-    Socket requestSocket;
+    private Socket requestSocket;
 
     @Override
     public void run() {

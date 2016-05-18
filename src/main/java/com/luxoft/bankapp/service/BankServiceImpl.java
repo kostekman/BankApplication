@@ -15,7 +15,7 @@ import java.io.*;
 import java.util.logging.Level;
 
 public class BankServiceImpl implements BankService {
-
+    private final static String fileName = "clients.txt";
     @Override
     public BankInfo getBankInfo(Bank bank) {
         BankInfo bankInfo = new BankInfo();
@@ -94,7 +94,7 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public void saveClient(Client client, String fileName) {
+    public void saveClient(Client client) {
         try (FileOutputStream fos = new FileOutputStream(fileName);
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             oos.writeObject(client);
@@ -105,11 +105,10 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public Client loadClient(String fileName) {
+    public Client loadClient() {
         try (FileInputStream fis = new FileInputStream(fileName);
              ObjectInputStream ois = new ObjectInputStream(fis)) {
-            Client client = (Client) ois.readObject();
-            return client;
+            return (Client) ois.readObject();
         } catch (ClassNotFoundException | IOException e) {
             BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);
             e.printStackTrace();

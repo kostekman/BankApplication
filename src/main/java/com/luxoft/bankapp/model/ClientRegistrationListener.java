@@ -1,6 +1,6 @@
 package com.luxoft.bankapp.model;
 
-public interface ClientRegistrationListener {
+interface ClientRegistrationListener {
 
     void onClientAdded(Client client);
 

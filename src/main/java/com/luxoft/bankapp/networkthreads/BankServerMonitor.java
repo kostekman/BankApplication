@@ -8,8 +8,8 @@ import java.util.logging.Level;
 /**
  * Created by AKoscinski on 2016-04-26.
  */
-public class BankServerMonitor implements Runnable {
-    volatile private AtomicInteger counter;
+class BankServerMonitor implements Runnable {
+    final private AtomicInteger counter;
 
     public BankServerMonitor(AtomicInteger counter){
         this.counter = counter;

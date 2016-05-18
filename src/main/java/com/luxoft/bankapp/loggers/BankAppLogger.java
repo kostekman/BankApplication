@@ -6,7 +6,7 @@ import java.util.logging.*;
  * Created by AKoscinski on 2016-05-10.
  */
 public class BankAppLogger {
-    private static Logger exceptionLogger;
+    private static final Logger exceptionLogger;
     static{
         exceptionLogger = Logger.getLogger(ExceptionFilter.class.getName());
         exceptionLogger.setLevel(Level.SEVERE);
@@ -20,7 +20,7 @@ public class BankAppLogger {
         }
     }
 
-    private static Logger connectionLogger;
+    private static final Logger connectionLogger;
     static{
         connectionLogger = Logger.getLogger(ConnectionFilter.class.getName());
         connectionLogger.setLevel(Level.INFO);
@@ -34,7 +34,7 @@ public class BankAppLogger {
         }
     }
 
-    private static Logger databaseLogger;
+    private static final Logger databaseLogger;
     static{
         databaseLogger = Logger.getLogger(DBfilter.class.getName());
         databaseLogger.setLevel(Level.INFO);
@@ -48,10 +48,10 @@ public class BankAppLogger {
         }
     }
 
-    public static void log(Level level, String message){
-        exceptionLogger.log(level, message);
-        connectionLogger.log(level, message);
-        databaseLogger.log(level, message);
+    public static void log(String message){
+        exceptionLogger.log(Level.INFO, message);
+        connectionLogger.log(Level.INFO, message);
+        databaseLogger.log(Level.INFO, message);
     }
 
     public static void log(Level level, String message, Exception e){

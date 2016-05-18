@@ -17,18 +17,17 @@ import static com.luxoft.bankapp.networkservice.RemoteOfficeServerService.Remote
 /**
  * Created by AKoscinski on 2016-04-26.
  */
-public class ServerThread implements Runnable {
-    private Socket connection;
+class ServerThread implements Runnable {
+    private final Socket connection;
     private ObjectOutputStream out;
     private ObjectInputStream in;
-    private String message;
-    private Bank bank;
+    private final Bank bank;
 
     public static AtomicInteger getCounterOfClients() {
         return counterOfClients;
     }
 
-    private static AtomicInteger counterOfClients = new AtomicInteger(0);
+    private static final AtomicInteger counterOfClients = new AtomicInteger(0);
 
     public ServerThread(Socket connection, Bank bank) {
         this.connection = connection;
@@ -45,12 +44,12 @@ public class ServerThread implements Runnable {
             out.flush();
             in = new ObjectInputStream(connection.getInputStream());
                 try {
-                    message = (String) in.readObject();
+                    String message = (String) in.readObject();
                     if (message.equals("ATM")) {
-                        BankAppLogger.log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "ATM connected");
+                        BankAppLogger.log(CurrentDateAndTime.getCurrentDateAndTime() + " | " + "ATM connected");
                         ATMService(in, out, bank);
                     } else if (message.equals("OFFICE")) {
-                        BankAppLogger.log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "OFFICE connected");
+                        BankAppLogger.log(CurrentDateAndTime.getCurrentDateAndTime() + " | " + "OFFICE connected");
                         RemoteOfficeService(in, out, bank);
                     }
 

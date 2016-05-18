@@ -53,7 +53,7 @@ public class BankDAOImpl extends BaseDAOImpl implements BankDAO {
             Bank newBank = getBankByName(bank.getName());
             bank.setId(newBank.getId());
             closeConnection();
-            BankAppLogger.log(Level.INFO, "DB " + CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Bank with id: " + newBank.getId() + "saved");
+            BankAppLogger.log("DB " + CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Bank with id: " + newBank.getId() + "saved");
 
         } catch (SQLException | BankNotFoundException e) {
             e.printStackTrace();
@@ -76,7 +76,7 @@ public class BankDAOImpl extends BaseDAOImpl implements BankDAO {
                 throw new BankNotFoundException(bank.getName());
             }
             closeConnection();
-            BankAppLogger.log(Level.INFO, "DB " + CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Bank with id: " + bank.getId() + "removed");
+            BankAppLogger.log("DB " + CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Bank with id: " + bank.getId() + "removed");
         } catch (SQLException | BankNotFoundException e) {
             e.printStackTrace();
             BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);
@@ -93,7 +93,7 @@ public class BankDAOImpl extends BaseDAOImpl implements BankDAO {
             stmt.setInt(1, id);
             stmt.execute();
             closeConnection();
-            BankAppLogger.log(Level.INFO, "DB " + CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Accounts for bank with with id: " + id + "removed");
+            BankAppLogger.log("DB " + CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Accounts for bank with with id: " + id + "removed");
         } catch (SQLException e) {
             e.printStackTrace();
             BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);
@@ -110,7 +110,7 @@ public class BankDAOImpl extends BaseDAOImpl implements BankDAO {
             stmt.setInt(1, id);
             stmt.execute();
             closeConnection();
-            BankAppLogger.log(Level.INFO, "DB " + CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Clients for bank with with id: " + id + "removed");
+            BankAppLogger.log("DB " + CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Clients for bank with with id: " + id + "removed");
         } catch (SQLException e) {
             e.printStackTrace();
             BankAppLogger.log(Level.SEVERE, "EX " + e.getMessage(), e);

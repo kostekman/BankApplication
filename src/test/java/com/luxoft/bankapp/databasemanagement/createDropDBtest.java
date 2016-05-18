@@ -8,7 +8,7 @@ import org.junit.Test;
  */
 public class createDropDBtest {
 
-    static DatabaseManager databaseManager;
+    private static DatabaseManager databaseManager;
     @BeforeClass
     public static void initialize(){
         databaseManager = new DatabaseManager();

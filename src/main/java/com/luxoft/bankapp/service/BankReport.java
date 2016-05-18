@@ -10,7 +10,7 @@ import java.util.*;
 /**
  * Created by Adam on 14.04.2016.
  */
-public class BankReport {
+class BankReport {
     public void getNumberOfClients(Bank bank) {
         System.out.println("Total number of clients for bank is: " + bank.getClients().size());
     }

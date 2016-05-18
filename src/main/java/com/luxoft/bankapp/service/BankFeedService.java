@@ -13,14 +13,13 @@ import java.util.logging.Level;
 /**
  * Created by AKoscinski on 2016-04-18.
  */
-public class BankFeedService {
+class BankFeedService {
 
-    private Map<String, String> clientMap = new HashMap<>();
-    private Map<String, String> accountMap = new HashMap<>();
-    private Bank activeBank;
+    private final Map<String, String> clientMap = new HashMap<>();
+    private final Map<String, String> accountMap = new HashMap<>();
 
     public BankFeedService(Bank activeBank) {
-        this.activeBank = activeBank;
+        Bank activeBank1 = activeBank;
     }
 
     public Map<String, String> getAccountMap() {
@@ -31,8 +30,8 @@ public class BankFeedService {
         return clientMap;
     }
 
-    public void loadFeed(String pathToFile) {
-        try (FileReader fr = new FileReader(pathToFile);
+    public void loadFeed() {
+        try (FileReader fr = new FileReader(com.luxoft.bankapp.service.BankApplication.fileName);
              LineNumberReader lnr = new LineNumberReader(fr)) {
 
             String line;

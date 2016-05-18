@@ -20,9 +20,8 @@ public class ATMClient {
     private Socket requestSocket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
-    private String message;
 
-    void run() {
+    private void run() {
         try {
             System.out.println("Select host: ");
             String serverAddress = getScanner().nextLine();
@@ -37,6 +36,7 @@ public class ATMClient {
                 try {
                     sendMessage("ATM", out);
                     String client;
+                    String message;
                     do {
                         System.out.println("Select client: (name surname)");
                         client = BankScanner.getScanner().nextLine();

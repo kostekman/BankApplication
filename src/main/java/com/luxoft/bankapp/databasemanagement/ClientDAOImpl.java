@@ -138,7 +138,7 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
         try {
             if (countClientFindByNameResults(client.getName()) == 1) {
                 addToBankClientsTable(bankId, client.getId());
-                BankAppLogger.log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Client with id: " + client.getId() + "added to bank with id: " + bankId);
+                BankAppLogger.log(CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Client with id: " + client.getId() + "added to bank with id: " + bankId);
             } else {
                 openConnection();
                 stmt = conn.prepareStatement(sqlInsertClient);
@@ -153,7 +153,7 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
                 client.setId(findClientByName(client.getName()).getId());
                 addToBankClientsTable(bankId, client.getId());
                 closeConnection();
-                BankAppLogger.log(Level.INFO, "DB " + CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Client with id: " + client.getId() + "created and added to bank with id: " + bankId);
+                BankAppLogger.log("DB " + CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Client with id: " + client.getId() + "created and added to bank with id: " + bankId);
 
             }
         } catch (SQLException e) {
@@ -233,7 +233,7 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
             stmt.execute();
 
             closeConnection();
-            BankAppLogger.log(Level.INFO, "DB " + CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Client with id: " + clientId + "removed from bank with id: " + bankId);
+            BankAppLogger.log("DB " + CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Client with id: " + clientId + "removed from bank with id: " + bankId);
 
 
         } catch (SQLException e) {
@@ -254,7 +254,7 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
             stmt.setInt(1, clientId);
             stmt.execute();
             closeConnection();
-            BankAppLogger.log(Level.INFO, "DB " + CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Client with id: " + clientId + "removed from database");
+            BankAppLogger.log("DB " + CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Client with id: " + clientId + "removed from database");
 
         } catch (SQLException e) {
             e.printStackTrace();

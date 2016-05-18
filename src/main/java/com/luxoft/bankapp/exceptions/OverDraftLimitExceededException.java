@@ -5,8 +5,8 @@ import com.luxoft.bankapp.model.CheckingAccount;
 public class OverDraftLimitExceededException extends NotEnoughFundsException {
 
     private static final long serialVersionUID = 1L;
-    private CheckingAccount account;
-    float possibleWithdrawal;
+    private final CheckingAccount account;
+    private final float possibleWithdrawal;
 
     public OverDraftLimitExceededException(float amount, CheckingAccount account) {
         super(amount);

@@ -10,7 +10,7 @@ import static com.luxoft.bankapp.scanner.StringChecker.checkNumber;
 
 public class TransferCommand extends AbstractAccountBalanceModifierCommand implements Command {
 
-    Client clientToTransfer;
+    private Client clientToTransfer;
 
     public TransferCommand(BankService bankService) {
         super(bankService);

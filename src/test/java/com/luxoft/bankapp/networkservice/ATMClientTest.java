@@ -127,7 +127,7 @@ public class ATMClientTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Float finalAmount = getAmount(NAME);
+        Float finalAmount = getAmount();
 
         assertEquals("Amounts are not equal", finalAmount, AMOUNTOFCASH - (float) AMOUNTOFTRANSACTIONS, 0.5);
     }
@@ -155,7 +155,7 @@ public class ATMClientTest {
         System.out.println("Average time of execution was: " + avgTime);
     }
 
-    private Float getAmount(String name) {
+    private Float getAmount() {
         try {
             Socket requestSocket;
             ObjectOutputStream out;
@@ -168,7 +168,7 @@ public class ATMClientTest {
             Thread.sleep(100);
             sendMessage("CLIENTINFO", out);
             Thread.sleep(100);
-            sendMessage(name, out);
+            sendMessage(ATMClientTest.NAME, out);
             Client client = (Client) in.readObject();
             sendMessage("4", out);
             sendMessage("bye", out);

@@ -17,7 +17,7 @@ import static com.luxoft.bankapp.scanner.StringChecker.*;
  * Created by Adam on 22.04.2016.
  */
 public class AddClientNetworkCommand extends AbstractNetworkCommand {
-    boolean isCorrectData = false;
+    private boolean isCorrectData = false;
 
     public AddClientNetworkCommand(ObjectInputStream in, ObjectOutputStream out) {
         super(in, out);

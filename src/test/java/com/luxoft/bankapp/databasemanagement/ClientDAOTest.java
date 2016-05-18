@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
  * Created by AKoscinski on 2016-05-04.
  */
 public class ClientDAOTest {
-    static DatabaseManager databaseManager;
+    private static DatabaseManager databaseManager;
 
     @BeforeClass
     public static void initialize() {

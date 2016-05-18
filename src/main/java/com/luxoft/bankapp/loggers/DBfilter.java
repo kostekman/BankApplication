@@ -6,7 +6,7 @@ import java.util.logging.LogRecord;
 /**
  * Created by AKoscinski on 2016-05-10.
  */
-public class DBfilter implements Filter {
+class DBfilter implements Filter {
     @Override
     public boolean isLoggable(LogRecord record) {
         String msg = record.getMessage();

@@ -11,7 +11,7 @@ import java.util.logging.Level;
 /**
  * Created by AKoscinski on 2016-05-04.
  */
-public class DatabaseManager extends BaseDAOImpl {
+class DatabaseManager extends BaseDAOImpl {
     public void createDatabase(){
         String sql = "CREATE TABLE BANKS ( \n" +
                 "ID INT PRIMARY KEY AUTO_INCREMENT NOT NULL,\n" +
@@ -47,7 +47,7 @@ public class DatabaseManager extends BaseDAOImpl {
             stmt = conn.prepareStatement(sql);
             stmt.execute();
             closeConnection();
-            BankAppLogger.log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Database created");
+            BankAppLogger.log(CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Database created");
 
         }catch (DAOException e) {
             e.printStackTrace();
@@ -67,7 +67,7 @@ public class DatabaseManager extends BaseDAOImpl {
             stmt = conn.prepareStatement(sql);
             stmt.execute();
             closeConnection();
-            BankAppLogger.log(Level.INFO, CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Database dropped");
+            BankAppLogger.log(CurrentDateAndTime.getCurrentDateAndTime() + " | " + "Database dropped");
 
         }catch (DAOException e) {
             e.printStackTrace();

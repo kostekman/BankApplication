@@ -7,8 +7,8 @@ import java.util.Random;
 
 public class BankApplication {
 
-    private static final String fileName = "data.csv";
-    private static final String csvSeparator = ";";
+    public static final String fileName = "data.csv";
+    public static final String csvSeparator = ";";
 
     private static Bank bank;
     private static BankServiceImpl bankService;
@@ -78,7 +78,7 @@ public class BankApplication {
 
     public static void main(String[] args) {
         if (args.length == 3 && args[0].equals("-gD")) {
-            DataGenerator.generateData(fileName, csvSeparator, Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+            DataGenerator.generateData(csvSeparator, Integer.parseInt(args[1]), Integer.parseInt(args[2]));
         } else if (args.length == 1 && args[0].equals("-report")) {
             BankReport bankReporter = new BankReport();
             bankReporter.getNumberOfClients(bank);

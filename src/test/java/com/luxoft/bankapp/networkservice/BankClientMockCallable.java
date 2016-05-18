@@ -10,8 +10,8 @@ import static com.luxoft.bankapp.networkservice.MessageSender.sendMessage;
 /**
  * Created by AKoscinski on 2016-04-26.
  */
-public class BankClientMockCallable implements Callable {
-    Socket requestSocket;
+class BankClientMockCallable implements Callable {
+    private Socket requestSocket;
 
     @Override
     public Long call() throws Exception {
@@ -38,7 +38,6 @@ public class BankClientMockCallable implements Callable {
             e.printStackTrace();
         }
         long endTime = System.nanoTime();
-        long duration = (endTime - startTime)/1000000;
-        return duration;
+        return (endTime - startTime)/1000000;
     }
 }

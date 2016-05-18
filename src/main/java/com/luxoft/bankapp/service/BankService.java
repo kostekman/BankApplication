@@ -22,7 +22,7 @@ public interface BankService {
 
     Client findClient(Bank bank, String name);
 
-    void saveClient(Client client, String fileName);
+    void saveClient(Client client);
 
-    Client loadClient(String fileName);
+    Client loadClient();
 }

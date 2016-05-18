@@ -9,12 +9,12 @@ public abstract class AbstractAccount implements Account {
     @NoDB
     private String accountType;
 
-    public AbstractAccount(float balance, String accountType) {
+    AbstractAccount(float balance, String accountType) {
         this.balance = balance;
         this.accountType = accountType;
     }
 
-    public AbstractAccount() {
+    AbstractAccount() {
     }
 
     @Override

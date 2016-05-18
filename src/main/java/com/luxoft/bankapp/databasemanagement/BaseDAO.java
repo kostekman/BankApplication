@@ -7,7 +7,7 @@ import java.sql.Connection;
 /**
  * Created by AKoscinski on 2016-04-29.
  */
-public interface BaseDAO {
-    public Connection openConnection() throws DAOException;
-    public void closeConnection();
+interface BaseDAO {
+    Connection openConnection() throws DAOException;
+    void closeConnection();
 }
