@@ -8,7 +8,7 @@ function isNumeric(input) {
 }
 
 function notEmpty() {
-    var name = document.forms["Name"]["name"].value;
+    var name = document.forms["clientName"]["clientName"].value;
     if(name.length < 1){
         $("#nameError").html("Please provide the proper name.");
         return false;

@@ -13,10 +13,11 @@ public class LoginServlet extends HttpServlet{
 
     public void doPost(final HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final String clientName = req.getParameter("clientName");
+        System.out.println(clientName);
         if(clientName == null){
             throw new ServletException("No client specified.");
         }
         req.getSession().setAttribute("clientName", clientName);
-        resp.sendRedirect("html\\atm\\menu.html");
+        resp.sendRedirect("html/atm/menu.html");
     }
 }
