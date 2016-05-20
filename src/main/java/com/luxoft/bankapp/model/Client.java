@@ -21,7 +21,7 @@ public class Client implements Report, Serializable {
     @NoDB
     private Set<Account> accounts;
     @NoDB
-    private Account activeAccount = new SavingAccount(0f);
+    private Account activeAccount = null;
     @NoDB
     private float initialOverdraft;
 

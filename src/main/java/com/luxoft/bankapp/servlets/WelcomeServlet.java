@@ -10,9 +10,15 @@ import java.io.IOException;
  * Created by akoscinski on 2016-05-18.
  */
 public class WelcomeServlet extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        ServletOutputStream out = response.getOutputStream();
+    @Override
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setContentType("text/html");
+        ServletOutputStream out = resp.getOutputStream();
+        out.println("<html>");
+        out.println("<body>");
         out.println("Hello! I'm ATM <br>");
         out.println("<a href='html\\atm\\atmlogin.html'>Login</a>");
+        out.println("</body>");
+        out.println("</html>");
     }
 }

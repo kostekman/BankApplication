@@ -11,9 +11,9 @@
     <table>
         <tr><td colspan=2 style="font-weight:bold;">Please provide the name of the client:</td></tr>
         <tr>
-            <form name="Name" onsubmit="return notEmpty()">
+            <form action="/login" method="post" name="Name">
                 <tr><td>Name:
-                    <td><input type="text" name="name"></td>
+                    <td><input type="text" name="clientName"></td>
                     <td id="nameError" class="error"></td></tr>
                     <tr><td><input type="submit" value="Submit">
                 </td></tr>
