@@ -11,7 +11,7 @@
 <table>
     <tr><td colspan=2 style="font-weight:bold;">Please provide the amount you want to withdraw: </td></tr>
     <tr>
-        <form name="withdraw" onsubmit="return isNumeric()">
+        <form action="/withdraw" method="post">
     <tr><td>Amount to withdraw:
         <td><input type="text" name="amount"></td>
         <td id="numberError" class="error"></td></tr>

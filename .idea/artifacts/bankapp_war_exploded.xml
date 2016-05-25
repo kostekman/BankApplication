@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="bankapp:war exploded">
+  <artifact type="exploded-war" build-on-make="true" name="bankapp:war exploded">
     <output-path>$PROJECT_DIR$/out/artifacts/bankapp_war_exploded</output-path>
     <root id="root">
       <element id="javaee-facet-resources" facet="bankapp/web/Web" />
@@ -11,6 +11,7 @@
           <element id="file-copy" path="$USER_HOME$/Downloads/h2-1.4.191.jar" />
         </element>
       </element>
+      <element id="dir-copy" path="$PROJECT_DIR$/web/html" />
     </root>
   </artifact>
 </component>

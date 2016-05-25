@@ -1,6 +1,9 @@
 package com.luxoft.bankapp.service;
 
 import com.luxoft.bankapp.exceptions.BankException;
+import com.luxoft.bankapp.exceptions.ClientNotFoundException;
+import com.luxoft.bankapp.exceptions.DAOException;
+import com.luxoft.bankapp.exceptions.TooManyClientsFoundException;
 import com.luxoft.bankapp.model.Account;
 import com.luxoft.bankapp.model.Bank;
 import com.luxoft.bankapp.model.Client;
@@ -25,4 +28,6 @@ public interface BankService {
     void saveClient(Client client);
 
     Client loadClient();
+
+    Client loadClientFromDb(String clientName) throws TooManyClientsFoundException, DAOException, ClientNotFoundException;
 }

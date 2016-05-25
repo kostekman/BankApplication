@@ -5,7 +5,9 @@ import com.luxoft.bankapp.databasemanagement.AccountDAOImpl;
 import com.luxoft.bankapp.databasemanagement.ClientDAO;
 import com.luxoft.bankapp.databasemanagement.ClientDAOImpl;
 import com.luxoft.bankapp.exceptions.BankException;
+import com.luxoft.bankapp.exceptions.ClientNotFoundException;
 import com.luxoft.bankapp.exceptions.DAOException;
+import com.luxoft.bankapp.exceptions.TooManyClientsFoundException;
 import com.luxoft.bankapp.loggers.BankAppLogger;
 import com.luxoft.bankapp.model.Account;
 import com.luxoft.bankapp.model.Bank;
@@ -114,5 +116,11 @@ public class BankServiceImpl implements BankService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public Client loadClientFromDb(String clientName) throws TooManyClientsFoundException, DAOException, ClientNotFoundException {
+        ClientDAO clientDAO = new ClientDAOImpl();
+        return clientDAO.findClientByName(clientName);
     }
 }

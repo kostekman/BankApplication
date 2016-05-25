@@ -10,7 +10,7 @@ import java.util.Collection;
  * Created by AKoscinski on 2016-05-10.
  */
 
-class TestService {
+public class TestService {
 
     public static boolean isEquals(Object o1, Object o2) throws IntrospectionException, InvocationTargetException, IllegalAccessException {
 

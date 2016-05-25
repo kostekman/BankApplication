@@ -24,7 +24,7 @@ public class CheckLoggedFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         if(path.endsWith("login.html") || parameter != null
-                || path.equals("/") || clientName != null){
+                || path.equals("/") || clientName != null || path.endsWith("sessions")){
             filterChain.doFilter(servletRequest, servletResponse);
         }
         else {

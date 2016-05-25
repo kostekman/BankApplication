@@ -17,10 +17,29 @@
         <servlet-class>com.luxoft.bankapp.servlets.LoginServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>SessionsAmountServlet</servlet-name>
+        <servlet-class>com.luxoft.bankapp.servlets.SessionsAmountServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>BalanceServlet</servlet-name>
+        <servlet-class>com.luxoft.bankapp.servlets.BalanceServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>WithdrawServlet</servlet-name>
+        <servlet-class>com.luxoft.bankapp.servlets.WithdrawServlet</servlet-class>
+    </servlet>
+    
     <filter>
         <filter-name>CheckLogged</filter-name>
         <filter-class>com.luxoft.bankapp.filters.CheckLoggedFilter</filter-class>
     </filter>
+
+    <listener>
+        <listener-class>com.luxoft.bankapp.listeners.SessionListener</listener-class>
+    </listener>
 
     <servlet-mapping>
         <servlet-name>WelcomeServlet</servlet-name>
@@ -32,6 +51,21 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>SessionsAmountServlet</servlet-name>
+        <url-pattern>/sessions</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>BalanceServlet</servlet-name>
+        <url-pattern>/html/atm/balance</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>WithdrawServlet</servlet-name>
+        <url-pattern>/withdraw</url-pattern>
+    </servlet-mapping>
+    
     <filter-mapping>
         <filter-name>CheckLogged</filter-name>
         <url-pattern>/*</url-pattern>
